@@ -19,7 +19,7 @@ parameters:
   date-format:
     default: '%Y-%m-%d'
     description: |
-      Date format. Default is %Y-%m-%d.
+      Date format. Default is "%Y-%m-%d".
     type: string
   output:
     default: CHANGELOG.md
@@ -29,262 +29,262 @@ parameters:
   base:
     default: ""
     description: |
-      "Optional base file to append generated changes to."
+      Optional base file to append generated changes to.
     type: string
   header-label:
     default: Changelog
     description: |
-      Set up custom header label. Default is # Changelog.
+      Set up custom header label. Default is Changelog.
     type: string
   configure-sections:
     default: ""
     description: |
-      "Define your own set of sections which overrides all default sections."
+      Define your own set of sections which overrides all default sections.
     type: string
   add-sections:
     default: ""
     description: |
-      "Add new sections but keep the default sections."
+      Add new sections but keep the default sections.
     type: string
   front-matter:
     default: ""
     description: |
-      "Add YAML front matter. Formatted as JSON because it's easier to add on the command line."
+      Add YAML front matter. Formatted as JSON because it's easier to add on the command line.
     type: string
   issues:
     default: true
     description: |
-      "Include closed issues in changelog. Default is true."
+      Include closed issues in changelog. Default is true.
     type: boolean
   issues-wo-labels:
     default: true
     description: |
-      "Include closed issues without labels in changelog. Default is true."
+      Include closed issues without labels in changelog. Default is true.
     type: boolean
   pull-requests:
     default: true
     description: |
-      "Include pull-requests in changelog. Default is true."
+      Include pull-requests in changelog. Default is true.
     type: boolean
   pr-wo-labels:
     default: true
     description: |
-      "Include pull requests without labels in changelog. Default is true."
+      Include pull requests without labels in changelog. Default is true.
     type: boolean
   filter-by-milestone:
     default: true
     description: |
-      "Use milestone to detect when issue was resolved. Default is true."
+      Use milestone to detect when issue was resolved. Default is true.
     type: boolean
   author:
     default: true
     description: |
-      "Add author of pull request at the end. Default is true"
+      Add author of pull request at the end. Default is true
     type: boolean
   usernames-as-github-logins:
     default: ""
     description: |
-      "Use GitHub tags instead of Markdown links for the author of an issue or pull-request."
+      Use GitHub tags instead of Markdown links for the author of an issue or pull-request.
     type: string
   unreleased-only:
     default: ""
     description: |
-      "Generate log from unreleased closed issues only."
+      Generate log from unreleased closed issues only.
     type: string
   unreleased:
     default: true
     description: |
-      "Add to log unreleased closed issues. Default is true."
+      Add to log unreleased closed issues. Default is true.
     type: boolean
   unreleased-label:
     default: '**Unreleased**'
     description: |
-      "Set up custom label for unreleased closed issues section. Default is **Unreleased:**."
+      Set up custom label for unreleased closed issues section. Default is "**Unreleased:**".
     type: string
   compare-link:
     default: true
     description: |
-      "Include compare link (Full Changelog) between older version and newer version. Default is true."
+      Include compare link (Full Changelog) between older version and newer version. Default is true.
     type: boolean
   include-labels:
     default: ""
     description: |
-      "Of the labeled issues, only include the ones with the specified labels."
+      Of the labeled issues, only include the ones with the specified labels.
     type: string
   exclude-labels:
     default: duplicate,question,invalid,wontfix
     description: |
-      "Issues with the specified labels will be excluded from changelog. Default is duplicate,question,invalid,wontfix."
+      Issues with the specified labels will be excluded from changelog. Default is duplicate,question,invalid,wontfix.
     type: string
   issue-line-labels:
     default: ""
     description: |
-      "The specified labels will be shown in brackets next to each matching issue. Use ALL to show all labels. Default is []."
+      The specified labels will be shown in brackets next to each matching issue. Use ALL to show all labels. Default is [].
     type: string
   exclude-tags:
     default: ""
     description: |
-      "Changelog will exclude specified tags."
+      Changelog will exclude specified tags.
     type: string
   exclude-tags-regex:
     default: ""
     description: |
-      "Apply a regular expression on tag names so that they can be excluded."
+      Apply a regular expression on tag names so that they can be excluded.
     type: string
   since-tag:
     default: ""
     description: |
-      "Changelog will start after specified tag."
+      Changelog will start after specified tag.
     type: string
   due-tag:
     default: ""
     description: |
-      "Changelog will end before specified tag."
+      Changelog will end before specified tag.
     type: string
   max-issues:
     default: -1
     description: |
-      "Maximum number of issues to fetch from GitHub. Default is unlimited."
+      Maximum number of issues to fetch from GitHub. Default is unlimited.
     type: integer
   release-url:
     default: ""
     description: |
-      "The URL to point to for release links, in printf format (with the tag as variable)."
+      The URL to point to for release links, in printf format (with the tag as variable).
     type: string
   github-site:
     default: ""
     description: |
-      "The Enterprise GitHub site where your project is hosted."
+      The Enterprise GitHub site where your project is hosted.
     type: string
   github-api:
     default: ""
     description: |
-      "The enterprise endpoint to use for your GitHub API."
+      The enterprise endpoint to use for your GitHub API.
     type: string
   simple-list:
     default: false
     description: |
-      "Create a simple list from issues and pull requests. Default is false."
+      Create a simple list from issues and pull requests. Default is false.
     type: boolean
   future-release:
     default: ""
     description: |
-      "Put the unreleased changes in the specified release number."
+      Put the unreleased changes in the specified release number.
     type: string
   release-branch:
     default: ""
     description: |
-      "Limit pull requests to the release branch, such as master or release."
+      Limit pull requests to the release branch, such as master or release.
     type: string
   http-cache:
     default: true
     description: |
-      "Use HTTP Cache to cache GitHub API requests (useful for large repos). Default is true."
+      Use HTTP Cache to cache GitHub API requests (useful for large repos). Default is true.
     type: boolean
   cache-file:
     default: github-changelog-http-cache
     description: |
-      "Filename to use for cache. Default is github-changelog-http-cache in a temporary directory."
+      Filename to use for cache. Default is github-changelog-http-cache in a temporary directory.
     type: string
   cache-log:
     default: github-changelog-logger.log
     description: |
-      "Filename to use for cache log. Default is github-changelog-logger.log in a temporary directory."
+      Filename to use for cache log. Default is github-changelog-logger.log in a temporary directory.
     type: string
   ssl-ca-file:
     default: lib/github_changelog_generator/ssl_certs/cacert.pem
     description: |
-      "Path to cacert.pem file. Default is a bundled lib/github_changelog_generator/ssl_certs/cacert.pem. Respects SSL_CA_PATH."
+      Path to cacert.pem file. Default is a bundled lib/github_changelog_generator/ssl_certs/cacert.pem. Respects SSL_CA_PATH.
     type: string
   verbose:
     default: true
     description: |
-      "Run verbosely. Default is true."
+      Run verbosely. Default is true.
     type: boolean
   breaking-label:
     default: '**Implemented enhancements:**'
     description: |
-      "Set up custom label for breaking changes section. Default is **Implemented enhancements:**."
+      Set up custom label for breaking changes section. Default is "**Implemented enhancements:**".
     type: string
   breaking-labels:
     default: backwards-incompatible,breaking
     description: |
-      "Issues with these labels will be added to a new section, called 'Breaking changes'. Default is backwards-incompatible,breaking."
+      Issues with these labels will be added to a new section, called Breaking changes. Default is backwards-incompatible,breaking.
     type: string
   enhancement-label:
     default: "**Implemented enhancements:**"
     description: |
-      "Set up custom label for enhancements section. Default is **Implemented enhancements:**."
+      Set up custom label for enhancements section. Default is "**Implemented enhancements:**".
     type: string
   enhancement-labels:
     default: 'enhancement,Enhancement'
     description: |
-      "Issues with the specified labels will be added to 'mplemented enhancements section. Default is enhancement,Enhancement."
+      Issues with the specified labels will be added to 'Implemented enhancements section. Default is enhancement,Enhancement.
     type: string
   bugs-label:
     default: '**Fixed bugs:**'
     description: |
-      "Set up custom label for bug-fixes section. Default is **Fixed bugs:**."
+      Set up custom label for bug-fixes section. Default is "**Fixed bugs:**".
     type: string
   bug-labels:
     default: bug,Bug
     description: |
-      "Issues with the specified labels will be added to Fixed bugs section. Default is bug,Bug."
+      Issues with the specified labels will be added to Fixed bugs section. Default is bug,Bug.
     type: string
   deprecated-label:
     default: '**Deprecated:**'
     description: |
-      "Set up custom label for deprecated section. Default is **Deprecated:**."
+      Set up custom label for deprecated section. Default is "**Deprecated:**".
     type: string
   deprecated-labels:
     default: deprecated,Deprecated
     description: |
-      "Issues with the specified labels will be added to a section called Deprecated. Default is deprecated,Deprecated."
+      Issues with the specified labels will be added to a section called Deprecated. Default is deprecated,Deprecated.
     type: string
   removed-label:
     default: '**Removed:**'
     description: |
-      "Set up custom label for removed section. Default is **Removed:**."
+      Set up custom label for removed section. Default is "**Removed:**".
     type: string
   removed-labels:
     default: removed,Removed
     description: |
-      "Issues with the specified labels will be added to a section called Removed. Default is removed,Removed."
+      Issues with the specified labels will be added to a section called Removed. Default is removed,Removed.
     type: string
   security-label:
     default: '**Security fixes:**'
     description: |
-      "Set up custom label for security section. Default is **Security fixes:**."
+      Set up custom label for security section. Default is "**Security fixes:**".
     type: string
   security-labels:
     default: security,Security
     description: |
-      "Issues with the specified labels will be added to a section called Security fixes. Default is security,Security"
+      Issues with the specified labels will be added to a section called Security fixes. Default is security,Security
     type: string
   issues-label:
     default: '**Closed issues:**'
     description: |
-      "Set up custom label for closed-issues section. Default is **Closed issues:**."
+      Set up custom label for closed-issues section. Default is "**Closed issues:**".
     type: string
   pr-label:
     default: '**Merged pull requests:**'
     description: |
-      "Set up custom label for pull requests section. Default is **Merged pull requests:**."
+      Set up custom label for pull requests section. Default is "**Merged pull requests:**".
     type: string
   only-last-tag:
     default: false
     description: |
-      "Changelog will only show last tag."
+      Changelog will only show last tag.
     type: boolean
   strip-headers:
     default: ""
     description: |
-      "Strip headers."
+      Strip headers.
     type: string
   strip-generator-notice:
     default: ""
     description: |
-      "Strip generator reference."
+      Strip generator reference.
     type: string
 steps:
   - run:
