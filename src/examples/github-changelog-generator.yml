@@ -1,0 +1,19 @@
+description: >
+  Example
+usage:
+  version: 2.1
+
+  orbs:
+    github-changelog-generator: onimur/github-changelog-generator@x.y.z
+
+  workflows:
+    changelog-generator:
+      jobs:
+
+        - github-changelog-generator/create-changelog:
+            user: CIRCLE_PROJECT_USERNAME
+            project: CIRCLE_PROJECT_REPONAME
+            token: GITHUB_TOKEN
+            filters:
+              branches:
+                only: master

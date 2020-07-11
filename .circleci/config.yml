@@ -1,0 +1,144 @@
+version: 2.1
+
+orbs:
+  orb-tools: circleci/orb-tools@9.1.0
+  queue: eddiewebb/queue@1.5.0
+  # add your orb below, to be used in integration tests (note: a
+  # @dev:alpha release must exist; if none exists, you'll need to
+  # publish manually once before this worklow can succeed)
+  github-changelog-generator: onimur/github-changelog-generator@<<pipeline.parameters.dev-orb-version>>
+
+orb_prep_jobs: &orb_prep_jobs
+  [
+    orb-tools/lint,
+    orb-tools/shellcheck,
+    orb-tools/pack
+  ]
+
+# Pipeline parameters
+parameters:
+  # These pipeline parameters are required by the "trigger-integration-tests-workflow"
+  # job, by default.
+  run-integration-tests:
+    type: boolean
+    default: false
+  dev-orb-version:
+    type: string
+    default: "dev:alpha"
+
+jobs:
+  integration-tests-for-github-changelog-generator:
+    docker:
+       - image: circleci/ruby:latest
+    executor: orb-tools/ubuntu
+
+    steps:
+      - checkout
+      # Test your orb e.g.
+      - github-changelog-generator/changelog-command:
+          user: CIRCLE_PROJECT_USERNAME
+          project: CIRCLE_PROJECT_REPONAME
+          token: GITHUB_TOKEN
+          output: CHANGELOG-TEST-DEFAULT.md
+      - run:
+          name: Create test folder
+          command: |
+            mkdir -p test
+            find -iname 'CHANGELOG-TEST-DEFAULT.md' -exec cp {} ./test/ \;
+            find .
+      - store_artifacts:
+          path: test
+
+orb_promotion_filters: &orb_promotion_filters
+  branches:
+    ignore: /.*/
+  tags:
+    only: /^(major|minor|patch)-release-v\d+\.\d+\.\d+$/
+
+workflows:
+  lint_pack-validate_publish-dev:
+    unless: << pipeline.parameters.run-integration-tests >>
+    jobs:
+      - orb-tools/lint
+
+      - orb-tools/shellcheck:
+          exclude: "SC2002,SC1073"
+
+      - orb-tools/pack:
+          source-dir: src
+          destination-orb-path: orb.yml
+          workspace-path: orb.yml
+          artifact-path: orb.yml
+          requires: [orb-tools/lint]
+
+      - orb-tools/publish-dev:
+          context: main-context
+          orb-name: onimur/github-changelog-generator
+          requires: [orb-tools/pack]
+
+      - queue/block_workflow:
+          context: main-context
+          circleci-api-key: CIRCLE_TOKEN
+          requires: [orb-tools/publish-dev]
+
+      - orb-tools/trigger-integration-tests-workflow:
+          name: trigger-integration
+          context: main-context
+          requires: [queue/block_workflow]
+
+  integration_tests-prod_deploy:
+    when: << pipeline.parameters.run-integration-tests >>
+    jobs:
+      # Run my ORB
+      - integration-tests-for-github-changelog-generator:
+          context: main-context
+
+      # Actually publish the orb
+      # Promote a dev version of an orb to a semantic production release.
+      # It assumes the context of a GitHub pull request, and promotion of the orb to a
+      # new major/minor/patch version is based on information that must be contained in the
+      # subject of the commit that merges the pull request. Namely, the commit subject must
+      # include the `[semver:FOO]` pattern, where FOO is major, minor, patch, or skip (to skip promotion).
+      # e.g. 'Merge pull request #XX from some-branch [semver:minor]'
+      # This job is designed to run at the conclusion of an integration-testing workflow.
+      - orb-tools/dev-promote-prod-from-commit-subject:
+          name: dev-promote-semver
+          add-pr-comment: true
+          fail-if-semver-not-indicated: false
+          bot-user: onimurCI-bot
+          bot-token-variable: GITHUB_TOKEN
+          context: main-context
+          orb-name: onimur/github-changelog-generator
+          publish-version-tag: true
+          requires: [integration-tests-for-github-changelog-generator]
+          filters:
+            branches:
+              only: master
+
+  # Tag-triggered workflow to promote a dev orb into production.
+  # The tag is expected to have been applied manually.
+  #
+  # Uses the CLI to promote a dev version of an orb to the registry.
+  # This command supports Semantic Versioning support.
+  # Whether the new release of the orb will be a patch, minor or major release
+  # is determined based on the information in the commit's git tag which
+  # must match the regex pattern defined in the major-release-tag-regex,
+  # minor-release-tag-regex and patch-release-tag-regex parameters.
+  # Hence this job should be configured with an "only" tag filter suitable
+  # for the above 3 patterns (e.g. /^(major|minor|patch)-release-v\d+\.\d+\.\d+$/
+  # would fit the default patterns) and a branch filter set to ignore /.*/
+  tag-triggered-orb-publishing:
+    unless: << pipeline.parameters.run-integration-tests >>
+    jobs:
+      - hold-for-approval:
+          type: approval
+          filters: *orb_promotion_filters
+      - orb-tools/dev-promote-prod-from-git-tag:
+          orb-name: onimur/github-changelog-generator
+          context: main-context
+          add-pr-comment: true
+          bot-user: onimurCI-bot
+          bot-token-variable: GITHUB_TOKEN
+          requires:
+            - hold-for-approval
+          filters: *orb_promotion_filters

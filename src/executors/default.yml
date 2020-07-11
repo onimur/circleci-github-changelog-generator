@@ -1,0 +1,12 @@
+# How to author Executors: https://circleci.com/docs/2.0/reusing-config/#authoring-reusable-executors
+description: |
+  Ruby image provided by CircleCI.
+docker:
+  - image: 'circleci/ruby:<<parameters.tag>>'
+parameters:
+  tag:
+    default: "latest"
+    description: |
+      Can be changed to any of the available tags listed on the DockerHub for this image.
+      https://circleci.com/docs/2.0/circleci-images/#ruby
+    type: string

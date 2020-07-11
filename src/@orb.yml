@@ -1,0 +1,9 @@
+version: 2.1
+
+description: >
+  Fully automated changelog generation with github-changelog-generator https://github.com/github-changelog-generator/github-changelog-generator
+  Based: in Action Github - https://github.com/heinrichreimer/action-github-changelog-generator
+  Repo this orb: https://github.com/onimur/circleci-github-changelog-generator
+display:
+  home_url: "https://github.com/onimur/circleci-github-changelog-generator"
+  source_url: "https://github.com/onimur/circleci-github-changelog-generator"

@@ -1,0 +1,433 @@
+description: |
+  Update and push changelog
+parameters:
+  user:
+    default: CIRCLE_PROJECT_USERNAME
+    description: |
+      Username of the owner of target GitHub repo.
+    type: env_var_name
+  project:
+    default: CIRCLE_PROJECT_REPONAME
+    description: |
+      Name of project on GitHub.
+    type: env_var_name
+  token:
+    default: GITHUB_TOKEN
+    description: |
+      To make more than 50 requests per hour your GitHub token is required.
+    type: env_var_name
+  date-format:
+    default: "%Y-%m-%d"
+    description: |
+      Date format. Default is %Y-%m-%d.
+    type: string
+  output:
+    default: "CHANGELOG.md"
+    description: |
+      Output file. Default is CHANGELOG.md.
+    type: string
+  base:
+    default: ""
+    description: |
+      "Optional base file to append generated changes to."
+    type: string
+  header-label:
+    default: "# Changelog"
+    description: |
+      Set up custom header label. Default is # Changelog.
+    type: string
+  configure-sections:
+    default: ""
+    description: |
+      "Define your own set of sections which overrides all default sections."
+    type: string
+  add-sections:
+    default: ""
+    description: |
+      "Add new sections but keep the default sections."
+    type: string
+  front-matter:
+    default: ""
+    description: |
+      "Add YAML front matter. Formatted as JSON because it's easier to add on the command line."
+    type: string
+  issues:
+    default: true
+    description: |
+      "Include closed issues in changelog. Default is true."
+    type: boolean
+  issues-wo-labels:
+    default: true
+    description: |
+      "Include closed issues without labels in changelog. Default is true."
+    type: boolean
+  pull-requests:
+    default: true
+    description: |
+      "Include pull-requests in changelog. Default is true."
+    type: boolean
+  pr-wo-labels:
+    default: true
+    description: |
+      "Include pull requests without labels in changelog. Default is true."
+    type: boolean
+  filter-by-milestone:
+    default: true
+    description: |
+      "Use milestone to detect when issue was resolved. Default is true."
+    type: boolean
+  author:
+    default: true
+    description: |
+      "Add author of pull request at the end. Default is true"
+    type: boolean
+  usernames-as-github-logins:
+    default: ""
+    description: |
+      "Use GitHub tags instead of Markdown links for the author of an issue or pull-request."
+    type: string
+  unreleased-only:
+    default: ""
+    description: |
+      "Generate log from unreleased closed issues only."
+    type: string
+  unreleased:
+    default: true
+    description: |
+      "Add to log unreleased closed issues. Default is true."
+    type: boolean
+  unreleased-label:
+    default: "**Unreleased**"
+    description: |
+      "Set up custom label for unreleased closed issues section. Default is **Unreleased:**."
+    type: string
+  compare-link:
+    default: true
+    description: |
+      "Include compare link (Full Changelog) between older version and newer version. Default is true."
+    type: boolean
+  include-labels:
+    default: ""
+    description: |
+      "Of the labeled issues, only include the ones with the specified labels."
+    type: string
+  exclude-labels:
+    default: "duplicate,question,invalid,wontfix"
+    description: |
+      "Issues with the specified labels will be excluded from changelog. Default is duplicate,question,invalid,wontfix."
+    type: string
+  issue-line-labels:
+    default: ""
+    description: |
+      "The specified labels will be shown in brackets next to each matching issue. Use ALL to show all labels. Default is []."
+    type: string
+  exclude-tags:
+    default: ""
+    description: |
+      "Changelog will exclude specified tags."
+    type: string
+  exclude-tags-regex:
+    default: ""
+    description: |
+      "Apply a regular expression on tag names so that they can be excluded."
+    type: string
+  since-tag:
+    default: ""
+    description: |
+      "Changelog will start after specified tag."
+    type: string
+  due-tag:
+    default: ""
+    description: |
+      "Changelog will end before specified tag."
+    type: string
+  max-issues:
+    default: -1
+    description: |
+      "Maximum number of issues to fetch from GitHub. Default is unlimited."
+    type: integer
+  release-url:
+    default: ""
+    description: |
+      "The URL to point to for release links, in printf format (with the tag as variable)."
+    type: string
+  github-site:
+    default: ""
+    description: |
+      "The Enterprise GitHub site where your project is hosted."
+    type: string
+  github-api:
+    default: ""
+    description: |
+      "The enterprise endpoint to use for your GitHub API."
+    type: string
+  simple-list:
+    default: false
+    description: |
+      "Create a simple list from issues and pull requests. Default is false."
+    type: boolean
+  future-release:
+    default: ""
+    description: |
+      "Put the unreleased changes in the specified release number."
+    type: string
+  release-branch:
+    default: ""
+    description: |
+      "Limit pull requests to the release branch, such as master or release."
+    type: string
+  http-cache:
+    default: true
+    description: |
+      "Use HTTP Cache to cache GitHub API requests (useful for large repos). Default is true."
+    type: boolean
+  cache-file:
+    default: github-changelog-http-cache
+    description: |
+      "Filename to use for cache. Default is github-changelog-http-cache in a temporary directory."
+    type: string
+  cache-log:
+    default: github-changelog-logger.log
+    description: |
+      "Filename to use for cache log. Default is github-changelog-logger.log in a temporary directory."
+    type: string
+  ssl-ca-file:
+    default: lib/github_changelog_generator/ssl_certs/cacert.pem
+    description: |
+      "Path to cacert.pem file. Default is a bundled lib/github_changelog_generator/ssl_certs/cacert.pem. Respects SSL_CA_PATH."
+    type: string
+  verbose:
+    default: true
+    description: |
+      "Run verbosely. Default is true."
+    type: boolean
+  breaking-label:
+    default: "**Implemented enhancements:**"
+    description: |
+      "Set up custom label for breaking changes section. Default is **Implemented enhancements:**."
+    type: string
+  breaking-labels:
+    default: backwards-incompatible,breaking
+    description: |
+      "Issues with these labels will be added to a new section, called 'Breaking changes'. Default is backwards-incompatible,breaking."
+    type: string
+  enhancement-label:
+    default: "**Implemented enhancements:**"
+    description: |
+      "Set up custom label for enhancements section. Default is **Implemented enhancements:**."
+    type: string
+  enhancement-labels:
+    default: "enhancement,Enhancement"
+    description: |
+      "Issues with the specified labels will be added to 'mplemented enhancements section. Default is enhancement,Enhancement."
+    type: string
+  bugs-label:
+    default: "**Fixed bugs:**"
+    description: |
+      "Set up custom label for bug-fixes section. Default is **Fixed bugs:**."
+    type: string
+  bug-labels:
+    default: bug,Bug
+    description: |
+      "Issues with the specified labels will be added to Fixed bugs section. Default is bug,Bug."
+    type: string
+  deprecated-label:
+    default: "**Deprecated:**"
+    description: |
+      "Set up custom label for deprecated section. Default is **Deprecated:**."
+    type: string
+  deprecated-labels:
+    default: "deprecated,Deprecated"
+    description: |
+      "Issues with the specified labels will be added to a section called Deprecated. Default is deprecated,Deprecated."
+    type: string
+  removed-label:
+    default: "**Removed:**"
+    description: |
+      "Set up custom label for removed section. Default is **Removed:**."
+    type: string
+  removed-labels:
+    default: "removed,Removed"
+    description: |
+      "Issues with the specified labels will be added to a section called Removed. Default is removed,Removed."
+    type: string
+  security-label:
+    default: "**Security fixes:**"
+    description: |
+      "Set up custom label for security section. Default is **Security fixes:**."
+    type: string
+  security-labels:
+    default: "security,Security"
+    description: |
+      "Issues with the specified labels will be added to a section called Security fixes. Default is security,Security"
+    type: string
+  issues-label:
+    default: "**Closed issues:**"
+    description: |
+      "Set up custom label for closed-issues section. Default is **Closed issues:**."
+    type: string
+  pr-label:
+    default: "**Merged pull requests:**"
+    description: |
+      "Set up custom label for pull requests section. Default is **Merged pull requests:**."
+    type: string
+  only-last-tag:
+    default: false
+    description: |
+      "Changelog will only show last tag."
+    type: boolean
+  strip-headers:
+    default: ""
+    description: |
+      "Strip headers."
+    type: string
+  strip-generator-notice:
+    default: ""
+    description: |
+      "Strip generator reference."
+    type: string
+steps:
+  - run:
+      name: Install github-changelog-generator
+      command: |
+        gem install github_changelog_generator
+  - run:
+      name: Run script and Update changelog
+      command: |
+        #!/bin/bash
+        #This script was written by: Jan Heinrich Reimer
+        #in: https://github.com/heinrichreimer/action-github-changelog-generator/blob/master/entrypoint.sh
+        #Only show last tag.
+        if [[ "<<parameters.only-last-tag>>" = true ]] ; then
+          "<<parameters.due-tag>>"=""
+          "<<parameters.since-tag>>"=$(git describe --abbrev=0 --tags "$(git rev-list --tags --skip=1 --max-count=1)")
+        fi
+        #Build arguments.
+        if [ -n "$<<parameters.user>>" ] ; then ARG_USER="--user $<<parameters.user>>"; fi
+        if [ -n "$<<parameters.project>>" ] ; then ARG_PROJECT="--project $<<parameters.project>>"; fi
+        if [ -n "$<<parameters.token>>" ] ; then ARG_TOKEN="--token $<<parameters.token>>"; fi
+        if [ -n "<<parameters.date-format>>" ] ; then ARG_DATEFORMAT="--date-format <<parameters.date-format>>"; fi
+        if [ -n "<<parameters.output>>" ] ; then ARG_OUTPUT="--output <<parameters.output>>"; fi
+        if [ -n "<<parameters.base>>" ] ; then ARG_BASE="--base <<parameters.base>>"; fi
+        if [ -n "<<parameters.header-label>>" ] ; then ARG_HEADERLABEL="--header-label <<parameters.header-label>>"; fi
+        if [ -n "<<parameters.configure-sections>>" ] ; then ARG_CONFIGURESECTIONS="--configure-sections <<parameters.configure-sections>>"; fi
+        if [ -n "<<parameters.add-sections>>" ] ; then ARG_ADDSECTIONS="--add-sections <<parameters.add-sections>>"; fi
+        if [ -n "<<parameters.front-matter>>" ] ; then ARG_FRONTMATTER="--front-matter <<parameters.front-matter>>"; fi
+        if [[ "<<parameters.issues>>" = true ]] ; then ARG_ISSUES="--issues"; else ARG_ISSUES="--no-issues"; fi
+        if [[ "<<parameters.issues-wo-labels>>" = true ]] ; then ARG_ISSUESWOLABELS="--issues-wo-labels"; else ARG_ISSUESWOLABELS="--no-issues-wo-labels"; fi
+        if [[ "<<parameters.pull-requests>>" = true ]] ; then ARG_PULLREQUESTS="--pull-requests"; else ARG_PULLREQUESTS="--no-pull-requests"; fi
+        if [[ "<<parameters.pr-wo-labels>>" = true ]] ; then ARG_PRWOLABELS="--pr-wo-labels"; else ARG_PRWOLABELS="--no-pr-wo-labels"; fi
+        if [[ "<<parameters.filter-by-milestone>>" = true ]] ; then ARG_FILTERBYMILESTONE="--filter-by-milestone"; else ARG_FILTERBYMILESTONE="--no-filter-by-milestone"; fi
+        if [[ "<<parameters.author>>" = true ]] ; then ARG_AUTHOR="--author"; else ARG_AUTHOR="--no-author"; fi
+        if [[ "<<parameters.usernames-as-github-logins>>" = true ]] ; then ARG_USERNAMESASGITHUBLOGINS="--usernames-as-github-logins"; fi
+        if [[ "<<parameters.unreleased-only>>" = true ]] ; then ARG_UNRELEASEDONLY="--unreleased-only"; fi
+        if [[ "<<parameters.unreleased>>" = true ]] ; then ARG_UNRELEASED="--unreleased"; else ARG_ISSUES="--no-unreleased"; fi
+        if [ -n "<<parameters.unreleased-label>>" ] ; then ARG_UNRELEASEDLABEL="--unreleased-label <<parameters.unreleased-label>>"; fi
+        if [[ "<<parameters.compare-link>>" = true ]] ; then ARG_COMPARELINK="--compare-link"; else ARG_COMPARELINK="--no-compare-link"; fi
+        if [ -n "<<parameters.include-labels>>" ] ; then ARG_INCLUDELABELS="--include-labels <<parameters.include-labels>>"; fi
+        if [ -n "<<parameters.exclude-labels>>" ] ; then ARG_EXCLUDELABELS="--exclude-labels <<parameters.exclude-labels>>"; fi
+        if [ -n "<<parameters.issue-line-labels>>" ] ; then ARG_ISSUELINELABELS="--issue-line-labels <<parameters.issue-line-labels>>"; fi
+        if [ -n "<<parameters.exclude-tags>>" ] ; then ARG_EXCLUDETAGS="--exclude-tags <<parameters.exclude-tags>>"; fi
+        if [ -n "<<parameters.exclude-tags-regex>>" ] ; then ARG_EXCLUDETAGSREGEX="--exclude-tags-regex <<parameters.exclude-tags-regex>>"; fi
+        if [ -n "<<parameters.since-tag>>" ] ; then ARG_SINCETAG="--since-tag <<parameters.since-tag>>"; fi
+        if [ -n "<<parameters.due-tag>>" ] ; then ARG_DUETAG="--due-tag <<parameters.due-tag>>"; fi
+        if [ "<<parameters.max-issues>>" -gt -1 ] ; then ARG_MAXISSUES="--max-issues <<parameters.max-issues>>"; else ARG_MAXISSUES="--max-issues 3000";  fi
+        if [ -n "<<parameters.release-url>>" ] ; then ARG_RELEASEURL="--release-url <<parameters.release-url>>"; fi
+        if [ -n "<<parameters.github-site>>" ] ; then ARG_GITHUBSITE="--github-site <<parameters.github-site>>"; fi
+        if [ -n "<<parameters.github-api>>" ] ; then ARG_GITHUBAPI="--github-api <<parameters.github-api>>"; fi
+        if [[ "<<parameters.simple-list>>" = true ]] ; then ARG_SIMPLELIST="--simple-list"; fi
+        if [ -n "<<parameters.future-release>>" ] ; then ARG_FUTURERELEASE="--future-release <<parameters.future-release>>"; fi
+        if [ -n "<<parameters.release-branch>>" ] ; then ARG_RELEASEBRANCH="--release-branch <<parameters.release-branch>>"; fi
+        if [[ "<<parameters.http-cache>>" = true ]] ; then ARG_HTTPCACHE="--http-cache"; fi
+        if [ -n "<<parameters.cache-file>>" ] ; then ARG_CACHEFILE="--cache-file <<parameters.cache-file>>"; fi
+        if [ -n "<<parameters.cache-log>>" ] ; then ARG_CACHELOG="--cache-log <<parameters.cache-log>>"; fi
+        if [ -n "<<parameters.ssl-ca-file>>" ] ; then ARG_SSLCAFILE="--ssl-ca-file <<parameters.ssl-ca-file>>"; fi
+        if [[ "<<parameters.verbose>>" = true ]] ; then ARG_VERBOSE="--verbose"; else ARG_VERBOSE="--no-verbose"; fi
+        if [ -n "<<parameters.breaking-label>>" ] ; then ARG_BREAKINGLABEL="--breaking-label <<parameters.breaking-label>>"; fi
+        if [ -n "<<parameters.breaking-labels>>" ] ; then ARG_BREAKINGLABELS="--breaking-labels <<parameters.breaking-labels>>"; fi
+        if [ -n "<<parameters.enhancement-label>>" ] ; then ARG_ENHANCEMENTLABEL="--enhancement-label <<parameters.enhancement-label>>"; fi
+        if [ -n "<<parameters.enhancement-labels>>" ] ; then ARG_ENHANCEMENTLABELS="--enhancement-labels <<parameters.enhancement-labels>>"; fi
+        if [ -n "<<parameters.bugs-label>>" ] ; then ARG_BUGSLABEL="--bugs-label <<parameters.bugs-label>>"; fi
+        if [ -n "<<parameters.bug-labels>>" ] ; then ARG_BUGLABELS="--bug-labels <<parameters.bug-labels>>"; fi
+        if [ -n "<<parameters.deprecated-label>>" ] ; then ARG_DEPRECATEDLABEL="--deprecated-label <<parameters.deprecated-label>>"; fi
+        if [ -n "<<parameters.deprecated-labels>>" ] ; then ARG_DEPRECATEDLABELS="--deprecated-labels <<parameters.deprecated-labels>>"; fi
+        if [ -n "<<parameters.removed-label>>" ] ; then ARG_REMOVEDLABEL="--removed-label <<parameters.removed-label>>"; fi
+        if [ -n "<<parameters.removed-labels>>" ] ; then ARG_REMOVEDLABELS="--removed-labels <<parameters.removed-labels>>"; fi
+        if [ -n "<<parameters.security-label>>" ] ; then ARG_SECURITYLABEL="--security-label <<parameters.security-label>>"; fi
+        if [ -n "<<parameters.security-labels>>" ] ; then ARG_SECURITYLABELS="--security-labels <<parameters.security-labels>>"; fi
+        if [ -n "<<parameters.issues-label>>" ] ; then ARG_ISSUESLABEL="--issues-label <<parameters.issues-label>>"; fi
+        if [ -n "<<parameters.pr-label>>" ] ; then ARG_PRLABEL="--pr-label <<parameters.pr-label>>"; fi
+        #Generate change log.
+        #shellcheck disable=SC2086 . We specifically want to allow word splitting.
+        github_changelog_generator \
+        $ARG_USER \
+        $ARG_PROJECT \
+        $ARG_TOKEN \
+        $ARG_DATEFORMAT \
+        $ARG_OUTPUT \
+        $ARG_BASE \
+        $ARG_HEADERLABEL \
+        $ARG_CONFIGURESECTIONS \
+        $ARG_ADDSECTIONS \
+        $ARG_FRONTMATTER \
+        $ARG_ISSUES \
+        $ARG_ISSUESWOLABELS \
+        $ARG_PULLREQUESTS \
+        $ARG_PRWOLABELS \
+        $ARG_FILTERBYMILESTONE \
+        $ARG_AUTHOR \
+        $ARG_USERNAMESASGITHUBLOGINS \
+        $ARG_UNRELEASEDONLY \
+        $ARG_UNRELEASED \
+        $ARG_UNRELEASEDLABEL \
+        $ARG_COMPARELINK \
+        $ARG_INCLUDELABELS \
+        $ARG_EXCLUDELABELS \
+        $ARG_ISSUELINELABELS \
+        $ARG_EXCLUDETAGS \
+        $ARG_EXCLUDETAGSREGEX \
+        $ARG_SINCETAG \
+        $ARG_DUETAG \
+        $ARG_MAXISSUES \
+        $ARG_RELEASEURL \
+        $ARG_GITHUBSITE \
+        $ARG_GITHUBAPI \
+        $ARG_SIMPLELIST \
+        $ARG_FUTURERELEASE \
+        $ARG_RELEASEBRANCH \
+        $ARG_HTTPCACHE \
+        $ARG_CACHEFILE \
+        $ARG_CACHELOG \
+        $ARG_SSLCAFILE \
+        $ARG_VERBOSE \
+        $ARG_BREAKINGLABEL \
+        $ARG_BREAKINGLABELS \
+        $ARG_ENHANCEMENTLABEL \
+        $ARG_ENHANCEMENTLABELS \
+        $ARG_BUGSLABEL \
+        $ARG_BUGLABELS \
+        $ARG_DEPRECATEDLABEL \
+        $ARG_DEPRECATEDLABELS \
+        $ARG_REMOVEDLABEL \
+        $ARG_REMOVEDLABELS \
+        $ARG_SECURITYLABEL \
+        $ARG_SECURITYLABELS \
+        $ARG_ISSUESLABEL \
+        $ARG_PRLABEL
+        #Locate change log.
+        FILE="CHANGELOG.md"
+        if [ -n "<<parameters.output>>" ] ; then FILE="<<parameters.output>>"; fi
+        #Strip Markdown headers.
+        if [[ "<<parameters.strip-headers>>" = true ]] ; then
+          echo "Stripping headers."
+          sed -i '/^#/d' "$FILE"
+        fi
+        #Strip generator notice.
+        if [[ "<<parameters.strip-generator-notice>>" = true ]] ; then
+          echo "Stripping generator notice."
+          sed -i '/This Changelog was automatically generated/d' "$FILE"
+        fi
+        #Save change log to outputs.
+        if [[ -e "$FILE" ]] ; then
+          echo ::set-output name=changelog::"$(cat "$FILE")"
+        fi
