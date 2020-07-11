@@ -35,19 +35,6 @@ jobs:
     steps:
       - checkout
       # Test your orb e.g.
-      - github-changelog-generator/changelog-command:
-          user: CIRCLE_PROJECT_USERNAME
-          project: CIRCLE_PROJECT_REPONAME
-          token: GITHUB_TOKEN
-          output: CHANGELOG-TEST-DEFAULT.md
-      - run:
-          name: Create test folder
-          command: |
-            mkdir -p test
-            find -iname 'CHANGELOG-TEST-DEFAULT.md' -exec cp {} ./test/ \;
-            find .
-      - store_artifacts:
-          path: test
 
 orb_promotion_filters: &orb_promotion_filters
   branches:
