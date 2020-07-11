@@ -17,12 +17,12 @@ parameters:
       To make more than 50 requests per hour your GitHub token is required.
     type: env_var_name
   date-format:
-    default: "%Y-%m-%d"
+    default: '%Y-%m-%d'
     description: |
       Date format. Default is %Y-%m-%d.
     type: string
   output:
-    default: "CHANGELOG.md"
+    default: CHANGELOG.md
     description: |
       Output file. Default is CHANGELOG.md.
     type: string
@@ -32,7 +32,7 @@ parameters:
       "Optional base file to append generated changes to."
     type: string
   header-label:
-    default: "# Changelog"
+    default: Changelog
     description: |
       Set up custom header label. Default is # Changelog.
     type: string
@@ -97,7 +97,7 @@ parameters:
       "Add to log unreleased closed issues. Default is true."
     type: boolean
   unreleased-label:
-    default: "**Unreleased**"
+    default: '**Unreleased**'
     description: |
       "Set up custom label for unreleased closed issues section. Default is **Unreleased:**."
     type: string
@@ -112,7 +112,7 @@ parameters:
       "Of the labeled issues, only include the ones with the specified labels."
     type: string
   exclude-labels:
-    default: "duplicate,question,invalid,wontfix"
+    default: duplicate,question,invalid,wontfix
     description: |
       "Issues with the specified labels will be excluded from changelog. Default is duplicate,question,invalid,wontfix."
     type: string
@@ -202,7 +202,7 @@ parameters:
       "Run verbosely. Default is true."
     type: boolean
   breaking-label:
-    default: "**Implemented enhancements:**"
+    default: '**Implemented enhancements:**'
     description: |
       "Set up custom label for breaking changes section. Default is **Implemented enhancements:**."
     type: string
@@ -217,12 +217,12 @@ parameters:
       "Set up custom label for enhancements section. Default is **Implemented enhancements:**."
     type: string
   enhancement-labels:
-    default: "enhancement,Enhancement"
+    default: 'enhancement,Enhancement'
     description: |
       "Issues with the specified labels will be added to 'mplemented enhancements section. Default is enhancement,Enhancement."
     type: string
   bugs-label:
-    default: "**Fixed bugs:**"
+    default: '**Fixed bugs:**'
     description: |
       "Set up custom label for bug-fixes section. Default is **Fixed bugs:**."
     type: string
@@ -232,42 +232,42 @@ parameters:
       "Issues with the specified labels will be added to Fixed bugs section. Default is bug,Bug."
     type: string
   deprecated-label:
-    default: "**Deprecated:**"
+    default: '**Deprecated:**'
     description: |
       "Set up custom label for deprecated section. Default is **Deprecated:**."
     type: string
   deprecated-labels:
-    default: "deprecated,Deprecated"
+    default: deprecated,Deprecated
     description: |
       "Issues with the specified labels will be added to a section called Deprecated. Default is deprecated,Deprecated."
     type: string
   removed-label:
-    default: "**Removed:**"
+    default: '**Removed:**'
     description: |
       "Set up custom label for removed section. Default is **Removed:**."
     type: string
   removed-labels:
-    default: "removed,Removed"
+    default: removed,Removed
     description: |
       "Issues with the specified labels will be added to a section called Removed. Default is removed,Removed."
     type: string
   security-label:
-    default: "**Security fixes:**"
+    default: '**Security fixes:**'
     description: |
       "Set up custom label for security section. Default is **Security fixes:**."
     type: string
   security-labels:
-    default: "security,Security"
+    default: security,Security
     description: |
       "Issues with the specified labels will be added to a section called Security fixes. Default is security,Security"
     type: string
   issues-label:
-    default: "**Closed issues:**"
+    default: '**Closed issues:**'
     description: |
       "Set up custom label for closed-issues section. Default is **Closed issues:**."
     type: string
   pr-label:
-    default: "**Merged pull requests:**"
+    default: '**Merged pull requests:**'
     description: |
       "Set up custom label for pull requests section. Default is **Merged pull requests:**."
     type: string
