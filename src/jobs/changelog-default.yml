@@ -1,0 +1,30 @@
+description: |
+  Update and push changelog
+executor: <<parameters.executor>>
+parameters:
+  executor:
+    default: default
+    description: |
+      Executor to use for this job. Defaults to this orb's default executor.
+    type: executor
+  user:
+    default: CIRCLE_PROJECT_USERNAME
+    description: |
+      Username of the owner of target GitHub repo.
+    type: env_var_name
+  project:
+    default: CIRCLE_PROJECT_REPONAME
+    description: |
+      Name of project on GitHub.
+    type: env_var_name
+  token:
+    default: GITHUB_TOKEN
+    description: |
+      To make more than 50 requests per hour your GitHub token is required.
+    type: env_var_name
+steps:
+  - checkout
+  - changelog-command:
+      user: <<parameters.user>>
+      project: <<parameters.project>>
+      token: <<parameters.token>>
