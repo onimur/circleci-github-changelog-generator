@@ -302,7 +302,6 @@ steps:
           "<<parameters.due-tag>>"=""
           "<<parameters.since-tag>>"=$(git describe --abbrev=0 --tags "$(git rev-list --tags --skip=1 --max-count=1)")
         fi
-        
         HEADER="$(echo '# <<parameters.header-label>>')"
         #Build arguments.
         if [ -n "$<<parameters.user>>" ] ; then ARG_USER="--user $<<parameters.user>>"; fi
