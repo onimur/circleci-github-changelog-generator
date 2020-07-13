@@ -1,4 +1,4 @@
-'#
+"#
 
 ## [patch-release-v2.0.6](https://github.com/onimur/circleci-github-changelog-generator/tree/patch-release-v2.0.6) (2020-07-13)
 
