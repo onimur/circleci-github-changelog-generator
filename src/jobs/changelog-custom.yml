@@ -292,6 +292,27 @@ parameters:
     description: |
       Strip generator reference.
     type: string
+  push-git:
+    default: false
+    description: |
+      Push the changelog to remote repository.
+    type: boolean
+  #Parameters only to push changelog
+  bot-name:
+    default: CircleCI-bot
+    description: |
+      User name to commit
+    type: string
+  bot-email:
+    default: circleci@bot-noreply.com
+    description: |
+      Email to commit
+    type: string
+  commit-message:
+    default: Auto Update changelog
+    description: Commit message
+    type: string
+
 steps:
   - checkout
   - changelog-command:
@@ -352,3 +373,15 @@ steps:
       only-last-tag: <<parameters.only-last-tag>>
       strip-headers: <<parameters.strip-headers>>
       strip-generator-notice: <<parameters.strip-generator-notice>>
+  - when:
+      condition: <<parameters.push-git>>
+      requires: [changelog-command]
+      steps:
+        - changelog-push-command:
+            user: <<parameters.user>>
+            project: <<parameters.project>>
+            bot-name: <<parameters.bot-name>>
+            bot-email: <<parameters.bot-email>>
+            commit-message: <<parameters.commit-message>>
+            token: <<parameters.token>>
+            output: <<parameters.output>>

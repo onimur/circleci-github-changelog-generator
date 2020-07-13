@@ -24,7 +24,7 @@ parameters:
   commit-message:
     default: Auto Update changelog
     description: Commit message
-    type: string  
+    type: string
   output:
     default: CHANGELOG.md
     description: |
