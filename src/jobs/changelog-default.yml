@@ -50,6 +50,17 @@ parameters:
 
 steps:
   - checkout
+  - when:
+      condition: <<parameters.push-git>>
+      steps:
+        - run:
+            name: Checkout to branch
+            command: |
+              if [ -n "$CIRCLE_TAG" ]
+              then
+                git reset --hard "$CIRCLE_SHA1"
+                git checkout -q -B "<<parameters.branch>>"
+              fi
   - changelog-command:
       user: <<parameters.user>>
       project: <<parameters.project>>
