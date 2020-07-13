@@ -48,7 +48,7 @@ jobs:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
           token: GITHUB_TOKEN
-          output: OUTPUT_FILE
+          output: ${OUTPUT_FILE}
       - run:
           name: Create artifacts folder
           command: |
@@ -59,7 +59,7 @@ jobs:
           token: GITHUB_TOKEN
           bot-email: circleci-bot@no-reply.com
           bot-name: CircleCI Bot
-          output: OUTPUT_FILE
+          output: ${OUTPUT_FILE}
       - store_artifacts:
           path: ./artifacts
   #publish on github releases
