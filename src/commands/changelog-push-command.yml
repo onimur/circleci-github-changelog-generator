@@ -12,7 +12,7 @@ parameters:
       Name of project on GitHub.
     type: env_var_name
   bot-name:
-    default: CircleCI-bot
+    default: circleci-bot
     description: |
       User name to commit
     type: string
