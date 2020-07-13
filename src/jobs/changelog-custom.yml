@@ -295,7 +295,7 @@ parameters:
   push-git:
     default: false
     description: |
-      Push the changelog to remote repository.
+      If true, Push the changelog to remote repository. Else store changelog to artifacts
     type: boolean
   #Parameters only to push changelog
   bot-name:
@@ -385,3 +385,14 @@ steps:
             commit-message: <<parameters.commit-message>>
             token: <<parameters.token>>
             output: <<parameters.output>>
+  - unless:
+      condition: <<parameters.push-git>>
+      requires: [changelog-command]
+      steps:
+        - run:
+            name: Save changelog to artifacts
+            command: |
+              mkdir -p artifacts
+              find -iname '<<parameters.output>>' -exec cp {} ./artifacts/ \;
+        - store_artifacts:
+            path: artifacts
