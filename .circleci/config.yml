@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   orb-tools: circleci/orb-tools@9.1.0
   queue: eddiewebb/queue@1.5.0
-  changelog: onimur/github-changelog-generator@2.0.3
+  changelog: onimur/github-changelog-generator@2.0.4
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
   # publish manually once before this worklow can succeed)
@@ -42,9 +42,9 @@ jobs:
           token: GITHUB_TOKEN
           output: CHANGELOG-TEST-DEFAULT.md
       - run:
-          name: Create test folder
+          name: Create artifacts folder
           command: |
-            mkdir -p test
+            mkdir -p artifacts
             find -iname 'CHANGELOG-TEST-DEFAULT.md' -exec cp {} ./artifacts/ \;
             find -iname 'github-changelog-logger.log' -exec cp {} ./artifacts/ \;
       - store_artifacts:
@@ -52,10 +52,8 @@ jobs:
   #publish on github releases
   publish-github-release:
     docker:
-      - image: cibuilds/github:0.10
+      - image: cibuilds/github:0.13
     steps:
-      - attach_workspace:
-          at: ./artifacts
       - run:
           name: Publish Release on GitHub
           command: |
@@ -67,7 +65,7 @@ jobs:
             -r ${CIRCLE_PROJECT_REPONAME}  \
             -b "${BODY}" \
             -c ${CIRCLE_SHA1}  \
-            -delete ${CIRCLE_TAG} ./artifacts/
+            -delete ${CIRCLE_TAG}
 
 orb_promotion_filters: &orb_promotion_filters
   branches:
