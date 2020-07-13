@@ -77,3 +77,7 @@ steps:
               find -iname 'CHANGELOG.md' -exec cp {} ./artifacts/ \;
         - store_artifacts:
             path: artifacts
+        - persist_to_workspace:
+            root: ./
+            paths:
+              - artifacts/*
