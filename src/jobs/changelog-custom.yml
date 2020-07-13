@@ -38,7 +38,7 @@ parameters:
       Optional base file to append generated changes to.
     type: string
   header-label:
-    default: Changelog
+    default: '# Changelog'
     description: |
       Set up custom header label. Default is # Changelog.
     type: string
