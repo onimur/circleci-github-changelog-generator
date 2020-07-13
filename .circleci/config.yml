@@ -60,6 +60,7 @@ jobs:
           bot-email: circleci-bot@no-reply.com
           bot-name: CircleCI Bot
           output: ${OUTPUT_FILE}
+          branch: master
       - store_artifacts:
           path: ./artifacts
   #publish on github releases

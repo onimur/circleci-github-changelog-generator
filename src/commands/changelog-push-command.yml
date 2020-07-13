@@ -35,6 +35,11 @@ parameters:
     description: |
       To make push to github remote
     type: env_var_name
+  branch:
+    default: master
+    description: |
+      Branch to push changelog
+    type: string
 
 steps:
   - run:
@@ -56,4 +61,4 @@ steps:
         git add ./<<parameters.output>>
         git diff-index --quiet HEAD || git commit -m "<<parameters.commit-message>> [skip ci]"
         # Push quietly to prevent showing the token in log
-        git push -q https://$<<parameters.token>>@github.com/$<<parameters.user>>/$<<parameters.project>>.git HEAD:${CIRCLE_BRANCH}
+        git push -q https://$<<parameters.token>>@github.com/$<<parameters.user>>/$<<parameters.project>>.git <<parameters.branch>>

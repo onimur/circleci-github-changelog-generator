@@ -42,6 +42,11 @@ parameters:
     default: Auto Update changelog
     description: Commit message
     type: string
+  branch:
+    default: master
+    description: |
+      Branch to push changelog
+    type: string
 
 steps:
   - checkout
@@ -60,6 +65,7 @@ steps:
             bot-email: <<parameters.bot-email>>
             commit-message: <<parameters.commit-message>>
             token: <<parameters.token>>
+            branch: <<parameters.branch>>
   - unless:
       condition: <<parameters.push-git>>
       requires: [changelog-command]

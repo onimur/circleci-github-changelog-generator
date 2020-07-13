@@ -310,7 +310,13 @@ parameters:
     type: string
   commit-message:
     default: Auto Update changelog
-    description: Commit message
+    description: |
+      Commit message
+    type: string
+  branch:
+    default: master
+    description: |
+      Branch to push changelog
     type: string
 
 steps:
@@ -385,6 +391,7 @@ steps:
             commit-message: <<parameters.commit-message>>
             token: <<parameters.token>>
             output: <<parameters.output>>
+            branch: <<parameters.branch>>
   - unless:
       condition: <<parameters.push-git>>
       requires: [changelog-command]
