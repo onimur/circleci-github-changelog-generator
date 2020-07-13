@@ -1,5 +1,5 @@
 description: >
-  Example
+  Generate Changelog with custom parameters and store the file on folder ./artifacts with persist_to_workspace (CIRCLECI)
 usage:
   version: 2.1
 
@@ -9,11 +9,14 @@ usage:
   workflows:
     changelog-generator:
       jobs:
-
         - github-changelog-generator/changelog-custom:
             user: CIRCLE_PROJECT_USERNAME
             project: CIRCLE_PROJECT_REPONAME
             token: GITHUB_TOKEN
+            push-git: false
+            # Trigger only tags
             filters:
               branches:
-                only: master
+                ignore: /.*/
+              tags:
+                only: /^\d+\.\d+\.\d+$/ #for tag 1.2.3
