@@ -277,15 +277,15 @@ parameters:
       Changelog will only show last tag.
     type: boolean
   strip-headers:
-    default: ""
+    default: false
     description: |
       Strip headers.
-    type: string
+    type: boolean
   strip-generator-notice:
-    default: ""
+    default: false
     description: |
       Strip generator reference.
-    type: string
+    type: boolean
 steps:
   - run:
       name: Install github-changelog-generator
