@@ -62,7 +62,7 @@ workflows:
       - orb-tools/lint
 
       - orb-tools/shellcheck:
-          exclude: "SC2002,SC1073"
+          exclude: "SC2002,SC1073,SC1009"
 
       - orb-tools/pack:
           source-dir: src
