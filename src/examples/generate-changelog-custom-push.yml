@@ -1,0 +1,22 @@
+description: >
+  Generate Changelog with default parameters and push to remote repository on master branch
+usage:
+  version: 2.1
+
+  orbs:
+    github-changelog-generator: onimur/github-changelog-generator@x.y.z
+
+  workflows:
+    changelog-generator:
+      jobs:
+        - github-changelog-generator/changelog-custom:
+            user: CIRCLE_PROJECT_USERNAME
+            project: CIRCLE_PROJECT_REPONAME
+            token: GITHUB_TOKEN
+            push-git: true
+            # Trigger only tags
+            filters:
+              branches:
+                ignore: /.*/
+              tags:
+                only: /^\d+\.\d+\.\d+$/ #for tag 1.2.3
