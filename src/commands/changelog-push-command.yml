@@ -45,7 +45,7 @@ steps:
         git config user.email "<<parameters.bot-email>>"
   - run:
       command: |
-        if [ -z ${CIRCLE_TAG+x} ]; then
+        if [ -z "${CIRCLE_TAG+x}" ]; then
           if [[ "$(git show -s --format=%B | head -n 1)" == "<<parameters.commit-message>>" ]]; then
               circleci-agent step halt
           fi
@@ -53,7 +53,6 @@ steps:
   - run:
       name: Push the CHANGELOG.md to Github
       command: |
-        git fetch
         git add ./<<parameters.output>>
         git commit -m "<<parameters.commit-message>> [skip ci]"
         # Push quietly to prevent showing the token in log
