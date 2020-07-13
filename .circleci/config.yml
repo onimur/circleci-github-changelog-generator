@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   orb-tools: circleci/orb-tools@9.1.0
   queue: eddiewebb/queue@1.5.0
+  changelog: onimur/github-changelog-generator@2.0.3
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
   # publish manually once before this worklow can succeed)
@@ -44,10 +45,29 @@ jobs:
           name: Create test folder
           command: |
             mkdir -p test
-            find -iname 'CHANGELOG-TEST-DEFAULT.md' -exec cp {} ./test/ \;
-            find -iname 'github-changelog-logger.log' -exec cp {} ./test/ \;
+            find -iname 'CHANGELOG-TEST-DEFAULT.md' -exec cp {} ./artifacts/ \;
+            find -iname 'github-changelog-logger.log' -exec cp {} ./artifacts/ \;
       - store_artifacts:
-          path: test
+          path: ./artifacts
+  #publish on github releases
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: ./artifacts
+      - run:
+          name: Publish Release on GitHub
+          command: |
+            DATE=$(date +'%m-%d-%y')
+            printf -v BODY "$(<./docs/RELEASE_TEMPLATE.md)" "${CIRCLE_PROJECT_REPONAME}" "${DATE}" "${CIRCLE_TAG}" "${CIRCLE_BUILD_NUM}" "${CIRCLE_BUILD_URL}"
+            ghr \
+            -t ${GITHUB_TOKEN} \
+            -u ${CIRCLE_PROJECT_USERNAME} \
+            -r ${CIRCLE_PROJECT_REPONAME}  \
+            -b "${BODY}" \
+            -c ${CIRCLE_SHA1}  \
+            -delete ${CIRCLE_TAG} ./artifacts/
 
 orb_promotion_filters: &orb_promotion_filters
   branches:
@@ -142,3 +162,17 @@ workflows:
           requires:
             - hold-for-approval
           filters: *orb_promotion_filters
+      - publish-github-release:
+          context: main-context
+          requires: [orb-tools/dev-promote-prod-from-git-tag]
+          filters: *orb_promotion_filters
+      - changelog/changelog-default:
+          context: main-context
+          user: CIRCLE_PROJECT_USERNAME
+          project: CIRCLE_PROJECT_REPONAME
+          token: GITHUB_TOKEN
+          bot-email: circleci-bot@no-reply.com
+          bot-name: CircleCI Bot
+          push-git: true
+          filters: *orb_promotion_filters
+          requires: [publish-github-release]
