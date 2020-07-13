@@ -54,6 +54,6 @@ steps:
       name: Push the CHANGELOG.md to Github
       command: |
         git add ./<<parameters.output>>
-        git commit -m "<<parameters.commit-message>> [skip ci]"
+        git diff-index --quiet HEAD || git commit -m "<<parameters.commit-message>> [skip ci]"
         # Push quietly to prevent showing the token in log
         git push -q https://$<<parameters.token>>@github.com/$<<parameters.user>>/$<<parameters.project>>.git ${CIRCLE_BRANCH}
