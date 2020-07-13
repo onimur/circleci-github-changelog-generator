@@ -35,12 +35,34 @@ jobs:
 
     steps:
       - checkout
+      
       # Test your orb e.g.
+      - run:
+          name: Export env-var
+          command: |
+            echo 'export OUTPUT_FILE="CHANGELOG-TEST-DEFAULT.md"' >> $BASH_ENV
+            echo 'export GITHUB_PROJECT_TEST="circleci-for-testing"' >> $BASH_ENV
       - github-changelog-generator/changelog-command:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
           token: GITHUB_TOKEN
-          output: CHANGELOG-TEST-DEFAULT.md
+          output: OUTPUT_FILE
+      - run:
+          name: Create artifacts folder
+          command: |
+            mkdir -p artifacts
+            find -iname 'CHANGELOG-TEST-DEFAULT.md' -exec cp {} ./artifacts/ \;
+            find -iname 'github-changelog-logger.log' -exec cp {} ./artifacts/ \;
+      - store_artifacts:
+          path: ./artifacts
+
+      - github-changelog-generator/changelog-push-command:
+          user: CIRCLE_PROJECT_USERNAME
+          project: GITHUB_PROJECT_TEST
+          token: GITHUB_TOKEN
+          bot-email: circleci-bot@no-reply.com
+          bot-name: CircleCI Bot
+          output: OUTPUT_FILE
       - run:
           name: Create artifacts folder
           command: |
