@@ -302,6 +302,8 @@ steps:
           "<<parameters.due-tag>>"=""
           "<<parameters.since-tag>>"=$(git describe --abbrev=0 --tags "$(git rev-list --tags --skip=1 --max-count=1)")
         fi
+        
+        HEADER="$(echo '# <<parameters.header-label>>')"
         #Build arguments.
         if [ -n "$<<parameters.user>>" ] ; then ARG_USER="--user $<<parameters.user>>"; fi
         if [ -n "$<<parameters.project>>" ] ; then ARG_PROJECT="--project $<<parameters.project>>"; fi
@@ -309,7 +311,7 @@ steps:
         if [ -n "<<parameters.date-format>>" ] ; then ARG_DATEFORMAT="--date-format <<parameters.date-format>>"; fi
         if [ -n "<<parameters.output>>" ] ; then ARG_OUTPUT="--output <<parameters.output>>"; fi
         if [ -n "<<parameters.base>>" ] ; then ARG_BASE="--base <<parameters.base>>"; fi
-        if [ -n "<<parameters.header-label>>" ] ; then ARG_HEADERLABEL="--header-label # <<parameters.header-label>>"; fi
+        if [ -n "<<parameters.header-label>>" ] ; then ARG_HEADERLABEL="--header-label $HEADER"; fi
         if [ -n "<<parameters.configure-sections>>" ] ; then ARG_CONFIGURESECTIONS="--configure-sections <<parameters.configure-sections>>"; fi
         if [ -n "<<parameters.add-sections>>" ] ; then ARG_ADDSECTIONS="--add-sections <<parameters.add-sections>>"; fi
         if [ -n "<<parameters.front-matter>>" ] ; then ARG_FRONTMATTER="--front-matter <<parameters.front-matter>>"; fi
