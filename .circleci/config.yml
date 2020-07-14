@@ -57,8 +57,6 @@ jobs:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
           token: GITHUB_TOKEN
-          bot-email: circleci-bot@no-reply.com
-          bot-name: CircleCI Bot
           output: ${OUTPUT_FILE}
       - store_artifacts:
           path: ./artifacts
