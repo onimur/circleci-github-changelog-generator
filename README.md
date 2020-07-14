@@ -14,7 +14,7 @@ Orb for CircleCI that automatically generates thechange log from your tags, issu
 
 <p align="center">
     <a title="CircleCI Github Changelog Generator">
-        <img width="75%" src=".github/resources/logo_git.png">
+        <img width="45%" src=".github/resources/logo_git.png">
     </a>
 </p>
 
