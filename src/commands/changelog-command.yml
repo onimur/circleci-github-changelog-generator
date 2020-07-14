@@ -429,5 +429,5 @@ steps:
         fi
         #Save change log to outputs.
         if [[ -e "$FILE" ]] ; then
-          echo ::set-output name=changelog::"$(cat "$FILE")"
+          echo ::set-output name=changelog::"$(cat $FILE)"
         fi
