@@ -11,6 +11,7 @@
 </p>
 
 Orb for CircleCI that automatically generates thechange log from your tags, issues, labels and pull requests on GitHub, using [github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator)'s and based [action-github-changelog-generator](https://github.com/marketplace/actions/generate-changelog)'s
+
 This orb is registered with CircleCI, see [here](https://circleci.com/orbs/registry/orb/onimur/github-changelog-generator).
 
 <p align="center">
