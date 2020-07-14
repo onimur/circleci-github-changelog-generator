@@ -67,6 +67,7 @@ jobs:
     docker:
       - image: cibuilds/github:0.13
     steps:
+      - checkout
       - run:
           name: Publish Release on GitHub
           command: |
