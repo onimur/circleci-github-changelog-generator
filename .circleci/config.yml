@@ -181,8 +181,6 @@ workflows:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
           token: GITHUB_TOKEN
-          bot-email: circleci-bot@no-reply.com
-          bot-name: CircleCI Bot
           push-git: true
           filters: *orb_promotion_filters
           requires: [publish-github-release]
