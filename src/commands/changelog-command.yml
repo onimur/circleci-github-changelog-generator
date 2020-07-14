@@ -348,7 +348,7 @@ steps:
         if [ -n "<<parameters.enhancement-label>>" ] ; then ARG_ENHANCEMENTLABEL=(--enhancement-label "<<parameters.enhancement-label>>"); fi
         if [ -n "<<parameters.enhancement-labels>>" ] ; then ARG_ENHANCEMENTLABELS=(--enhancement-labels "<<parameters.enhancement-labels>>"); fi
         if [ -n "<<parameters.bugs-label>>" ] ; then ARG_BUGSLABEL=(--bugs-label "<<parameters.bugs-label>>"); fi
-        if [ -n "<<parameters.bug-labels>>" ] ; then ARG_BUGLABELS=(--bug-labels <<parameters.bug-labels>>"); fi
+        if [ -n "<<parameters.bug-labels>>" ] ; then ARG_BUGLABELS=(--bug-labels "<<parameters.bug-labels>>"); fi
         if [ -n "<<parameters.deprecated-label>>" ] ; then ARG_DEPRECATEDLABEL=(--deprecated-label "<<parameters.deprecated-label>>"); fi
         if [ -n "<<parameters.deprecated-labels>>" ] ; then ARG_DEPRECATEDLABELS=(--deprecated-labels "<<parameters.deprecated-labels>>"); fi
         if [ -n "<<parameters.removed-label>>" ] ; then ARG_REMOVEDLABEL=(--removed-label "<<parameters.removed-label>>"); fi
