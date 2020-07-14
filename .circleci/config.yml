@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   orb-tools: circleci/orb-tools@9.1.0
   queue: eddiewebb/queue@1.5.0
-  changelog: onimur/github-changelog-generator@2.0.7
+  changelog: onimur/github-changelog-generator@2.0.8
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
   # publish manually once before this worklow can succeed)
