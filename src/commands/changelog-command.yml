@@ -382,7 +382,7 @@ steps:
         "${ARG_UNRELEASEDLABEL[@]}" \
         $ARG_COMPARELINK \
         "${ARG_INCLUDELABELS[@]}" \
-        "${ARG_EXCLUDELABELS[@]} \
+        "${ARG_EXCLUDELABELS[@]}" \
         "${ARG_ISSUELINELABELS[@]}" \
         "${ARG_EXCLUDETAGS[@]}" \
         "${ARG_EXCLUDETAGSREGEX[@]}" \
