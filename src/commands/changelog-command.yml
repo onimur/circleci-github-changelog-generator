@@ -212,12 +212,12 @@ parameters:
       Issues with these labels will be added to a new section, called Breaking changes. Default is backwards-incompatible,breaking.
     type: string
   enhancement-label:
-    default: "**Implemented enhancements:**"
+    default: '**Implemented enhancements:**'
     description: |
       Set up custom label for enhancements section. Default is "**Implemented enhancements:**".
     type: string
   enhancement-labels:
-    default: 'enhancement,Enhancement'
+    default: enhancement,Enhancement
     description: |
       Issues with the specified labels will be added to 'Implemented enhancements section. Default is enhancement,Enhancement.
     type: string
@@ -303,16 +303,16 @@ steps:
           "<<parameters.since-tag>>"=$(git describe --abbrev=0 --tags "$(git rev-list --tags --skip=1 --max-count=1)")
         fi
         #Build arguments.
-        if [ -n "$<<parameters.user>>" ] ; then ARG_USER="--user $<<parameters.user>>"; fi
-        if [ -n "$<<parameters.project>>" ] ; then ARG_PROJECT="--project $<<parameters.project>>"; fi
-        if [ -n "$<<parameters.token>>" ] ; then ARG_TOKEN="--token $<<parameters.token>>"; fi
-        if [ -n "<<parameters.date-format>>" ] ; then ARG_DATEFORMAT="--date-format <<parameters.date-format>>"; fi
-        if [ -n "<<parameters.output>>" ] ; then ARG_OUTPUT="--output <<parameters.output>>"; fi
-        if [ -n "<<parameters.base>>" ] ; then ARG_BASE="--base <<parameters.base>>"; fi
+        if [ -n "$<<parameters.user>>" ] ; then ARG_USER=(--user "$<<parameters.user>>"); fi
+        if [ -n "$<<parameters.project>>" ] ; then ARG_PROJECT=(--project "$<<parameters.project>>"); fi
+        if [ -n "$<<parameters.token>>" ] ; then ARG_TOKEN=(--token "$<<parameters.token>>"); fi
+        if [ -n "<<parameters.date-format>>" ] ; then ARG_DATEFORMAT=(--date-format "<<parameters.date-format>>"); fi
+        if [ -n "<<parameters.output>>" ] ; then ARG_OUTPUT=(--output "<<parameters.output>>"); fi
+        if [ -n "<<parameters.base>>" ] ; then ARG_BASE=(--base "<<parameters.base>>"); fi
         if [ -n "<<parameters.header-label>>" ] ; then ARG_HEADERLABEL=(--header-label "<<parameters.header-label>>"); fi
-        if [ -n "<<parameters.configure-sections>>" ] ; then ARG_CONFIGURESECTIONS="--configure-sections <<parameters.configure-sections>>"; fi
-        if [ -n "<<parameters.add-sections>>" ] ; then ARG_ADDSECTIONS="--add-sections <<parameters.add-sections>>"; fi
-        if [ -n "<<parameters.front-matter>>" ] ; then ARG_FRONTMATTER="--front-matter <<parameters.front-matter>>"; fi
+        if [ -n "<<parameters.configure-sections>>" ] ; then ARG_CONFIGURESECTIONS=(--configure-sections "<<parameters.configure-sections>>"); fi
+        if [ -n "<<parameters.add-sections>>" ] ; then ARG_ADDSECTIONS=(--add-sections "<<parameters.add-sections>>"); fi
+        if [ -n "<<parameters.front-matter>>" ] ; then ARG_FRONTMATTER=(--front-matter "<<parameters.front-matter>>"); fi
         if [[ "<<parameters.issues>>" = true ]] ; then ARG_ISSUES="--issues"; else ARG_ISSUES="--no-issues"; fi
         if [[ "<<parameters.issues-wo-labels>>" = true ]] ; then ARG_ISSUESWOLABELS="--issues-wo-labels"; else ARG_ISSUESWOLABELS="--no-issues-wo-labels"; fi
         if [[ "<<parameters.pull-requests>>" = true ]] ; then ARG_PULLREQUESTS="--pull-requests"; else ARG_PULLREQUESTS="--no-pull-requests"; fi
@@ -322,54 +322,54 @@ steps:
         if [[ "<<parameters.usernames-as-github-logins>>" = true ]] ; then ARG_USERNAMESASGITHUBLOGINS="--usernames-as-github-logins"; fi
         if [[ "<<parameters.unreleased-only>>" = true ]] ; then ARG_UNRELEASEDONLY="--unreleased-only"; fi
         if [[ "<<parameters.unreleased>>" = true ]] ; then ARG_UNRELEASED="--unreleased"; else ARG_ISSUES="--no-unreleased"; fi
-        if [ -n "<<parameters.unreleased-label>>" ] ; then ARG_UNRELEASEDLABEL="--unreleased-label <<parameters.unreleased-label>>"; fi
+        if [ -n "<<parameters.unreleased-label>>" ] ; then ARG_UNRELEASEDLABEL=(--unreleased-label "<<parameters.unreleased-label>>"); fi
         if [[ "<<parameters.compare-link>>" = true ]] ; then ARG_COMPARELINK="--compare-link"; else ARG_COMPARELINK="--no-compare-link"; fi
-        if [ -n "<<parameters.include-labels>>" ] ; then ARG_INCLUDELABELS="--include-labels <<parameters.include-labels>>"; fi
-        if [ -n "<<parameters.exclude-labels>>" ] ; then ARG_EXCLUDELABELS="--exclude-labels <<parameters.exclude-labels>>"; fi
-        if [ -n "<<parameters.issue-line-labels>>" ] ; then ARG_ISSUELINELABELS="--issue-line-labels <<parameters.issue-line-labels>>"; fi
-        if [ -n "<<parameters.exclude-tags>>" ] ; then ARG_EXCLUDETAGS="--exclude-tags <<parameters.exclude-tags>>"; fi
-        if [ -n "<<parameters.exclude-tags-regex>>" ] ; then ARG_EXCLUDETAGSREGEX="--exclude-tags-regex <<parameters.exclude-tags-regex>>"; fi
-        if [ -n "<<parameters.since-tag>>" ] ; then ARG_SINCETAG="--since-tag <<parameters.since-tag>>"; fi
-        if [ -n "<<parameters.due-tag>>" ] ; then ARG_DUETAG="--due-tag <<parameters.due-tag>>"; fi
+        if [ -n "<<parameters.include-labels>>" ] ; then ARG_INCLUDELABELS=(--include-labels "<<parameters.include-labels>>"); fi
+        if [ -n "<<parameters.exclude-labels>>" ] ; then ARG_EXCLUDELABELS=(--exclude-labels "<<parameters.exclude-labels>>"); fi
+        if [ -n "<<parameters.issue-line-labels>>" ] ; then ARG_ISSUELINELABELS=(--issue-line-labels "<<parameters.issue-line-labels>>"); fi
+        if [ -n "<<parameters.exclude-tags>>" ] ; then ARG_EXCLUDETAGS=(--exclude-tags "<<parameters.exclude-tags>>"); fi
+        if [ -n "<<parameters.exclude-tags-regex>>" ] ; then ARG_EXCLUDETAGSREGEX=(--exclude-tags-regex "<<parameters.exclude-tags-regex>>"); fi
+        if [ -n "<<parameters.since-tag>>" ] ; then ARG_SINCETAG=(--since-tag "<<parameters.since-tag>>"); fi
+        if [ -n "<<parameters.due-tag>>" ] ; then ARG_DUETAG=(--due-tag "<<parameters.due-tag>>"); fi
         if [ "<<parameters.max-issues>>" -gt -1 ] ; then ARG_MAXISSUES="--max-issues <<parameters.max-issues>>"; else ARG_MAXISSUES="--max-issues 3000";  fi
-        if [ -n "<<parameters.release-url>>" ] ; then ARG_RELEASEURL="--release-url <<parameters.release-url>>"; fi
-        if [ -n "<<parameters.github-site>>" ] ; then ARG_GITHUBSITE="--github-site <<parameters.github-site>>"; fi
-        if [ -n "<<parameters.github-api>>" ] ; then ARG_GITHUBAPI="--github-api <<parameters.github-api>>"; fi
+        if [ -n "<<parameters.release-url>>" ] ; then ARG_RELEASEURL=(--release-url "<<parameters.release-url>>"); fi
+        if [ -n "<<parameters.github-site>>" ] ; then ARG_GITHUBSITE=(--github-site "<<parameters.github-site>>"); fi
+        if [ -n "<<parameters.github-api>>" ] ; then ARG_GITHUBAPI=(--github-api "<<parameters.github-api>>"); fi
         if [[ "<<parameters.simple-list>>" = true ]] ; then ARG_SIMPLELIST="--simple-list"; fi
-        if [ -n "<<parameters.future-release>>" ] ; then ARG_FUTURERELEASE="--future-release <<parameters.future-release>>"; fi
-        if [ -n "<<parameters.release-branch>>" ] ; then ARG_RELEASEBRANCH="--release-branch <<parameters.release-branch>>"; fi
+        if [ -n "<<parameters.future-release>>" ] ; then ARG_FUTURERELEASE=(--future-release "<<parameters.future-release>>"); fi
+        if [ -n "<<parameters.release-branch>>" ] ; then ARG_RELEASEBRANCH=(--release-branch "<<parameters.release-branch>>"); fi
         if [[ "<<parameters.http-cache>>" = true ]] ; then ARG_HTTPCACHE="--http-cache"; fi
-        if [ -n "<<parameters.cache-file>>" ] ; then ARG_CACHEFILE="--cache-file <<parameters.cache-file>>"; fi
-        if [ -n "<<parameters.cache-log>>" ] ; then ARG_CACHELOG="--cache-log <<parameters.cache-log>>"; fi
-        if [ -n "<<parameters.ssl-ca-file>>" ] ; then ARG_SSLCAFILE="--ssl-ca-file <<parameters.ssl-ca-file>>"; fi
+        if [ -n "<<parameters.cache-file>>" ] ; then ARG_CACHEFILE=(--cache-file "<<parameters.cache-file>>"); fi
+        if [ -n "<<parameters.cache-log>>" ] ; then ARG_CACHELOG=(--cache-log "<<parameters.cache-log>>"); fi
+        if [ -n "<<parameters.ssl-ca-file>>" ] ; then ARG_SSLCAFILE=(--ssl-ca-file "<<parameters.ssl-ca-file>>"); fi
         if [[ "<<parameters.verbose>>" = true ]] ; then ARG_VERBOSE="--verbose"; else ARG_VERBOSE="--no-verbose"; fi
-        if [ -n "<<parameters.breaking-label>>" ] ; then ARG_BREAKINGLABEL="--breaking-label <<parameters.breaking-label>>"; fi
-        if [ -n "<<parameters.breaking-labels>>" ] ; then ARG_BREAKINGLABELS="--breaking-labels <<parameters.breaking-labels>>"; fi
-        if [ -n "<<parameters.enhancement-label>>" ] ; then ARG_ENHANCEMENTLABEL="--enhancement-label <<parameters.enhancement-label>>"; fi
-        if [ -n "<<parameters.enhancement-labels>>" ] ; then ARG_ENHANCEMENTLABELS="--enhancement-labels <<parameters.enhancement-labels>>"; fi
-        if [ -n "<<parameters.bugs-label>>" ] ; then ARG_BUGSLABEL="--bugs-label <<parameters.bugs-label>>"; fi
-        if [ -n "<<parameters.bug-labels>>" ] ; then ARG_BUGLABELS="--bug-labels <<parameters.bug-labels>>"; fi
-        if [ -n "<<parameters.deprecated-label>>" ] ; then ARG_DEPRECATEDLABEL="--deprecated-label <<parameters.deprecated-label>>"; fi
-        if [ -n "<<parameters.deprecated-labels>>" ] ; then ARG_DEPRECATEDLABELS="--deprecated-labels <<parameters.deprecated-labels>>"; fi
-        if [ -n "<<parameters.removed-label>>" ] ; then ARG_REMOVEDLABEL="--removed-label <<parameters.removed-label>>"; fi
-        if [ -n "<<parameters.removed-labels>>" ] ; then ARG_REMOVEDLABELS="--removed-labels <<parameters.removed-labels>>"; fi
-        if [ -n "<<parameters.security-label>>" ] ; then ARG_SECURITYLABEL="--security-label <<parameters.security-label>>"; fi
-        if [ -n "<<parameters.security-labels>>" ] ; then ARG_SECURITYLABELS="--security-labels <<parameters.security-labels>>"; fi
-        if [ -n "<<parameters.issues-label>>" ] ; then ARG_ISSUESLABEL="--issues-label <<parameters.issues-label>>"; fi
-        if [ -n "<<parameters.pr-label>>" ] ; then ARG_PRLABEL="--pr-label <<parameters.pr-label>>"; fi
+        if [ -n "<<parameters.breaking-label>>" ] ; then ARG_BREAKINGLABEL=(--breaking-label "<<parameters.breaking-label>>"); fi
+        if [ -n "<<parameters.breaking-labels>>" ] ; then ARG_BREAKINGLABELS=(--breaking-labels "<<parameters.breaking-labels>>"); fi
+        if [ -n "<<parameters.enhancement-label>>" ] ; then ARG_ENHANCEMENTLABEL=(--enhancement-label "<<parameters.enhancement-label>>"); fi
+        if [ -n "<<parameters.enhancement-labels>>" ] ; then ARG_ENHANCEMENTLABELS=(--enhancement-labels "<<parameters.enhancement-labels>>"); fi
+        if [ -n "<<parameters.bugs-label>>" ] ; then ARG_BUGSLABEL=(--bugs-label "<<parameters.bugs-label>>"); fi
+        if [ -n "<<parameters.bug-labels>>" ] ; then ARG_BUGLABELS=(--bug-labels <<parameters.bug-labels>>"); fi
+        if [ -n "<<parameters.deprecated-label>>" ] ; then ARG_DEPRECATEDLABEL=(--deprecated-label "<<parameters.deprecated-label>>"); fi
+        if [ -n "<<parameters.deprecated-labels>>" ] ; then ARG_DEPRECATEDLABELS=(--deprecated-labels "<<parameters.deprecated-labels>>"); fi
+        if [ -n "<<parameters.removed-label>>" ] ; then ARG_REMOVEDLABEL=(--removed-label "<<parameters.removed-label>>"); fi
+        if [ -n "<<parameters.removed-labels>>" ] ; then ARG_REMOVEDLABELS=(--removed-labels "<<parameters.removed-labels>>"); fi
+        if [ -n "<<parameters.security-label>>" ] ; then ARG_SECURITYLABEL=(--security-label "<<parameters.security-label>>"); fi
+        if [ -n "<<parameters.security-labels>>" ] ; then ARG_SECURITYLABELS=(--security-labels "<<parameters.security-labels>>"); fi
+        if [ -n "<<parameters.issues-label>>" ] ; then ARG_ISSUESLABEL=(--issues-label "<<parameters.issues-label>>"); fi
+        if [ -n "<<parameters.pr-label>>" ] ; then ARG_PRLABEL=(--pr-label "<<parameters.pr-label>>"); fi
         #Generate change log.
         #shellcheck disable=SC2086 . We specifically want to allow word splitting.
         github_changelog_generator \
-        $ARG_USER \
-        $ARG_PROJECT \
-        $ARG_TOKEN \
-        $ARG_DATEFORMAT \
-        $ARG_OUTPUT \
-        $ARG_BASE \
+        "${ARG_USER[@]}" \
+        "${ARG_PROJECT[@]}" \
+        "${ARG_TOKEN[@]}" \
+        "${ARG_DATEFORMAT[@]}" \
+        "${ARG_OUTPUT[@]}" \
+        "${ARG_BASE[@]}" \
         "${ARG_HEADERLABEL[@]}" \
-        $ARG_CONFIGURESECTIONS \
-        $ARG_ADDSECTIONS \
-        $ARG_FRONTMATTER \
+        "${ARG_CONFIGURESECTIONS[@]}" \
+        "${ARG_ADDSECTIONS[@]}" \
+        "${ARG_FRONTMATTER[@]}" \
         $ARG_ISSUES \
         $ARG_ISSUESWOLABELS \
         $ARG_PULLREQUESTS \
@@ -379,41 +379,41 @@ steps:
         $ARG_USERNAMESASGITHUBLOGINS \
         $ARG_UNRELEASEDONLY \
         $ARG_UNRELEASED \
-        $ARG_UNRELEASEDLABEL \
+        "${ARG_UNRELEASEDLABEL[@]}" \
         $ARG_COMPARELINK \
-        $ARG_INCLUDELABELS \
-        $ARG_EXCLUDELABELS \
-        $ARG_ISSUELINELABELS \
-        $ARG_EXCLUDETAGS \
-        $ARG_EXCLUDETAGSREGEX \
-        $ARG_SINCETAG \
-        $ARG_DUETAG \
+        "${ARG_INCLUDELABELS[@]}" \
+        "${ARG_EXCLUDELABELS[@]} \
+        "${ARG_ISSUELINELABELS[@]}" \
+        "${ARG_EXCLUDETAGS[@]}" \
+        "${ARG_EXCLUDETAGSREGEX[@]}" \
+        "${ARG_SINCETAG[@]}" \
+        "{$ARG_DUETAG[@]}" \
         $ARG_MAXISSUES \
-        $ARG_RELEASEURL \
-        $ARG_GITHUBSITE \
-        $ARG_GITHUBAPI \
+        "${ARG_RELEASEURL[@]}" \
+        "${ARG_GITHUBSITE[@]}" \
+        "${ARG_GITHUBAPI[@]}" \
         $ARG_SIMPLELIST \
-        $ARG_FUTURERELEASE \
-        $ARG_RELEASEBRANCH \
+        "${ARG_FUTURERELEASE[@]}" \
+        "${ARG_RELEASEBRANCH[@]}" \
         $ARG_HTTPCACHE \
-        $ARG_CACHEFILE \
-        $ARG_CACHELOG \
-        $ARG_SSLCAFILE \
+        "${ARG_CACHEFILE[@]}" \
+        "${ARG_CACHELOG[@]}" \
+        "${ARG_SSLCAFILE[@]}" \
         $ARG_VERBOSE \
-        $ARG_BREAKINGLABEL \
-        $ARG_BREAKINGLABELS \
-        $ARG_ENHANCEMENTLABEL \
-        $ARG_ENHANCEMENTLABELS \
-        $ARG_BUGSLABEL \
-        $ARG_BUGLABELS \
-        $ARG_DEPRECATEDLABEL \
-        $ARG_DEPRECATEDLABELS \
-        $ARG_REMOVEDLABEL \
-        $ARG_REMOVEDLABELS \
-        $ARG_SECURITYLABEL \
-        $ARG_SECURITYLABELS \
-        $ARG_ISSUESLABEL \
-        $ARG_PRLABEL
+        "${ARG_BREAKINGLABEL[@]}" \
+        "${ARG_BREAKINGLABELS[@]}" \
+        "${ARG_ENHANCEMENTLABEL[@]}" \
+        "${ARG_ENHANCEMENTLABELS[@]}" \
+        "${ARG_BUGSLABEL[@]}" \
+        "${ARG_BUGLABELS[@]}" \
+        "${ARG_DEPRECATEDLABEL[@]}" \
+        "${ARG_DEPRECATEDLABELS[@]}" \
+        "${ARG_REMOVEDLABEL[@]}" \
+        "${ARG_REMOVEDLABELS[@]}" \
+        "${ARG_SECURITYLABEL[@]}" \
+        "${ARG_SECURITYLABELS[@]}" \
+        "${ARG_ISSUESLABEL[@]}" \
+        "${ARG_PRLABEL[@]}"
         #Locate change log.
         FILE="CHANGELOG.md"
         if [ -n "<<parameters.output>>" ] ; then FILE="<<parameters.output>>"; fi
