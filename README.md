@@ -15,7 +15,7 @@ Orb for CircleCI that automatically generates thechange log from your tags, issu
 This orb is registered with CircleCI, see [here](https://circleci.com/orbs/registry/orb/onimur/github-changelog-generator).
 
 <p align="center">
-    <a title="CircleCI Github Changelog Generator">
+    <a href="https://circleci.com/orbs/registry/orb/onimur/github-changelog-generator" title="CircleCI Github Changelog Generator">
         <img width="45%" src=".github/resources/logo_git.png">
     </a>
 </p>
