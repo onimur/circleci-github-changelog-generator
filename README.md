@@ -6,7 +6,7 @@
         <img src="https://img.shields.io/github/license/onimur/circleci-github-changelog-generator">
     </a>
     <a href="https://app.circleci.com/pipelines/github/onimur/circleci-github-changelog-generator" title="onimur">
-        <img src="https://img.shields.io/circleci/build/github/onimur/circleci-github-changelog-generator?label=circleci&logo=CircleCI&logoColor=white">
+        <img src="https://circleci.com/gh/onimur/circleci-github-changelog-generator.svg?style=shield">
     </a>
 </p>
 
