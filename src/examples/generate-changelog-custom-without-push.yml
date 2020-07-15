@@ -6,17 +6,22 @@ usage:
   orbs:
     github-changelog-generator: onimur/github-changelog-generator@x.y.z
 
+  orb_tagged_filters: &orb_tagged_filters
+    branches:
+      ignore: /.*/
+    tags:
+      only: /^\d+\.\d+\.\d+$/ #for tag 1.2.3
+
   workflows:
-    changelog-generator:
+    tagged-publish: # run job for all tags
       jobs:
         - github-changelog-generator/changelog-custom:
-            user: CIRCLE_PROJECT_USERNAME
-            project: CIRCLE_PROJECT_REPONAME
-            token: GITHUB_TOKEN
-            push-git: false
-            # Trigger only tags
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /^\d+\.\d+\.\d+$/ #for tag 1.2.3
+            context: your-context           # Case contain your Github Token
+            token: GITHUB_TOKEN             # Token as env_var
+            push-git: false                 # The changelog will be save on store artifacts (Circle CI)
+            header-label: "# My Changelog"
+            date-format: "%d-%m-%Y"
+            output: CUSTOM-CHANGELOG.md
+            breaking-label: "**Breaking**"
+            bugs-label: "**Bugs**"
+            filters: *orb_tagged_filters    # Trigger to only tag

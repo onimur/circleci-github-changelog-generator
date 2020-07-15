@@ -1,22 +1,30 @@
 description: >
-  Generate Changelog with default parameters and push to remote repository on master branch
+  Generate Changelog with custom parameters and push to remote repository on master branch
 usage:
   version: 2.1
 
   orbs:
     github-changelog-generator: onimur/github-changelog-generator@x.y.z
 
+  orb_tagged_filters: &orb_tagged_filters
+    branches:
+      ignore: /.*/
+    tags:
+      only: /^\d+\.\d+\.\d+$/ #for tag 1.2.3
+
   workflows:
-    changelog-generator:
+    tagged-publish: # run job for all tags
       jobs:
         - github-changelog-generator/changelog-custom:
-            user: CIRCLE_PROJECT_USERNAME
-            project: CIRCLE_PROJECT_REPONAME
-            token: GITHUB_TOKEN
-            push-git: true
-            # Trigger only tags
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /^\d+\.\d+\.\d+$/ #for tag 1.2.3
+            context: your-context           # Case contain your Github Token
+            token: GITHUB_TOKEN             # Token as env_var
+            push-git: true                  # Push changelog to remote repository
+            commit-message: Update changelog
+            bot-name: my-bot
+            bot-email: my-bot@email.com
+            header-label: "# My Changelog"
+            date-format: "%d-%m-%Y"
+            output: CUSTOM-CHANGELOG.md
+            breaking-label: "**Breaking**"
+            bugs-label: "**Bugs**"
+            filters: *orb_tagged_filters    # Trigger to only tag
