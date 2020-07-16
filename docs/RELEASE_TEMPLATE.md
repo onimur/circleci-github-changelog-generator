@@ -1,13 +1,5 @@
-### 📌 %s
+## 📌 %s release notes 
 
-&nbsp;
-
-**♻ Updated:** at %s
-
-&nbsp;
-
-**⚠ Version:** %s  
-
-&nbsp;
-
-**🏗️ CircleCI Build:** [#%s](%s)
+| 📅 Date | ⚠️ Version |  🧰 CI Build | 📝 Changelog |
+|:------:|:---------:|:--------:|:-----------:|
+|   %s   |     %s    | [#%s](%s) |   [%s](%s)  |
