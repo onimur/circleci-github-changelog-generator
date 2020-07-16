@@ -7,6 +7,11 @@ parameters:
     description: |
       Executor to use for this job. Defaults to this orb's default executor.
     type: executor
+  steps:
+    default: []
+    description: |
+      Any step before execute job. It can be used to export or retrieve some environment variable.
+    type: steps
   user:
     default: CIRCLE_PROJECT_USERNAME
     description: |
@@ -50,6 +55,7 @@ parameters:
 
 steps:
   - checkout
+  - steps: <<parameters.steps>>
   - when:
       condition: <<parameters.push-git>>
       steps:
