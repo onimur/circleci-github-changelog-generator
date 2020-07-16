@@ -112,9 +112,7 @@ workflows:
   lint_pack-validate_publish-dev:
     unless: << pipeline.parameters.run-integration-tests >>
     jobs:
-      - export-env-var
       - orb-tools/lint:
-          requires: [export-env-var]
 
       - orb-tools/shellcheck:
           exclude: "SC2002,SC1073,SC1009"
@@ -136,10 +134,13 @@ workflows:
           circleci-api-key: CIRCLE_TOKEN
           requires: [orb-tools/publish-dev]
 
+      - export-env-var:
+          requires: [queue/block_workflow]
+
       - orb-tools/trigger-integration-tests-workflow:
           name: trigger-integration
           context: main-context
-          requires: [queue/block_workflow]
+          requires: [export-env-var]
 
   integration_tests-prod_deploy:
     when: << pipeline.parameters.run-integration-tests >>
