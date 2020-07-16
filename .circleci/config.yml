@@ -134,20 +134,19 @@ workflows:
           circleci-api-key: CIRCLE_TOKEN
           requires: [orb-tools/publish-dev]
 
-      - export-env-var:
-          requires: [queue/block_workflow]
-
       - orb-tools/trigger-integration-tests-workflow:
           name: trigger-integration
           context: main-context
-          requires: [export-env-var]
+          requires: [queue/block_workflow]
 
   integration_tests-prod_deploy:
     when: << pipeline.parameters.run-integration-tests >>
     jobs:
+      - export-env-var
       # Run my ORB
       - integration-tests-for-github-changelog-generator:
           context: main-context
+          requires: [export-env-var]
 
       # Actually publish the orb
       # Promote a dev version of an orb to a semantic production release.
