@@ -112,7 +112,7 @@ workflows:
   lint_pack-validate_publish-dev:
     unless: << pipeline.parameters.run-integration-tests >>
     jobs:
-      - orb-tools/lint:
+      - orb-tools/lint
 
       - orb-tools/shellcheck:
           exclude: "SC2002,SC1073,SC1009"
