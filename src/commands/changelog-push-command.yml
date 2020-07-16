@@ -61,4 +61,4 @@ steps:
         git add ./<<parameters.output>>
         git diff-index --quiet HEAD || git commit -m "<<parameters.commit-message>> [skip ci]"
         # Push quietly to prevent showing the token in log
-        git push -q https://$<<parameters.token>>@github.com/$<<parameters.user>>/$<<parameters.project>>.git <<parameters.branch>>
+        git push -f -q https://$<<parameters.token>>@github.com/$<<parameters.user>>/$<<parameters.project>>.git <<parameters.branch>>
