@@ -1,8 +1,13 @@
 ### 📌 %s
-<br />
-<br />
+
+&nbsp;
+
 **♻ Updated:** at %s
-<br />
+
+&nbsp;
+
 **⚠ Version:** %s  
-<br />
+
+&nbsp;
+
 **🏗️ CircleCI Build:** [#%s](%s)
