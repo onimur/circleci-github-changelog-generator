@@ -37,6 +37,8 @@ jobs:
     steps:
       - checkout
       # Test your orb e.g.
+      - mem/recall:
+          env_var: DATE_FORMAT
       - run:
           name: Create artifacts folder
           command: |
@@ -49,6 +51,7 @@ jobs:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
           token: GITHUB_TOKEN
+          date-format: ${DATE_FORMAT}
           output: ${OUTPUT_FILE}
       - run:
           name: Create artifacts folder
@@ -57,6 +60,7 @@ jobs:
       - github-changelog-generator/changelog-push-command:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
+          date-format: ${DATE_FORMAT}
           token: GITHUB_TOKEN
           output: ${OUTPUT_FILE}
       - store_artifacts:
@@ -109,7 +113,9 @@ workflows:
   lint_pack-validate_publish-dev:
     unless: << pipeline.parameters.run-integration-tests >>
     jobs:
-      - orb-tools/lint
+      - export-env-var
+      - orb-tools/lint:
+          requires: [export-env-var]
 
       - orb-tools/shellcheck:
           exclude: "SC2002,SC1073,SC1009"
