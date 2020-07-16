@@ -5,7 +5,7 @@
     <a href="./LICENSE" title="License">
         <img src="https://img.shields.io/github/license/onimur/circleci-github-changelog-generator">
     </a>
-    <a href="https://app.circleci.com/pipelines/github/onimur/circleci-github-changelog-generator" title="onimur">
+    <a href="https://circleci.com/gh/onimur/circleci-github-changelog-generator" title="onimur">
         <img src="https://circleci.com/gh/onimur/circleci-github-changelog-generator.svg?style=shield">
     </a>
 </p>
