@@ -87,7 +87,7 @@ jobs:
             -b "${BODY}" \
             -c ${CIRCLE_SHA1}  \
             -delete ${CIRCLE_TAG}
-            
+
   export-env-var:
     docker:
       - image: circleci/ruby:latest
