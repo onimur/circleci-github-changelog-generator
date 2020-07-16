@@ -182,7 +182,7 @@ workflows:
           type: approval
           filters: *orb_promotion_filters
       - export-env-var:
-          filter: *orb_promotion_filters
+          filters: *orb_promotion_filters
           requires: [hold-for-approval]
       - orb-tools/dev-promote-prod-from-git-tag:
           orb-name: onimur/github-changelog-generator
