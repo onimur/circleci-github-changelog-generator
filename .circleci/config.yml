@@ -60,7 +60,6 @@ jobs:
       - github-changelog-generator/changelog-push-command:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
-          date-format: ${DATE_FORMAT}
           token: GITHUB_TOKEN
           output: ${OUTPUT_FILE}
       - store_artifacts:
