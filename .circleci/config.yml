@@ -146,7 +146,6 @@ workflows:
               only: master
 
   # Tag-triggered workflow to promote a dev orb into production.
-  # The tag is expected to have been applied manually.
   #
   # Uses the CLI to promote a dev version of an orb to the registry.
   # This command supports Semantic Versioning support.
