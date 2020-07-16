@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   orb-tools: circleci/orb-tools@9.1.0
   queue: eddiewebb/queue@1.5.0
-  changelog: onimur/github-changelog-generator@2.0.8
+  changelog: onimur/github-changelog-generator@2.0.10
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
   # publish manually once before this worklow can succeed)
@@ -66,11 +66,19 @@ jobs:
       - image: cibuilds/github:0.13
     steps:
       - checkout
+      - mem/recall:
+          env_var: DATE_FORMAT
+      - mem/recall:
+          env_var: OUTPUT_CHANGELOG
       - run:
           name: Publish Release on GitHub
           command: |
-            DATE=$(date +'%m-%d-%y')
-            printf -v BODY "$(<./docs/RELEASE_TEMPLATE.md)" "${CIRCLE_PROJECT_REPONAME}" "${DATE}" "${CIRCLE_TAG}" "${CIRCLE_BUILD_NUM}" "${CIRCLE_BUILD_URL}"
+            DATE=$(date +${DATE_FORMAT})
+            TAG_WITHOUT_DOT="${CIRCLE_TAG//./}"
+            TITLE="CircleCI Github Changelog Generator"
+            URL_CHANGELOG="https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/blob/master/${OUTPUT_CHANGELOG}#${TAG_WITHOUT_DOT}-${DATE}"
+            printf -v BODY "$(<./docs/RELEASE_TEMPLATE.md)" \
+            "${TITLE}" "${DATE}" "${CIRCLE_TAG}" "${CIRCLE_BUILD_NUM}" "${CIRCLE_BUILD_URL}" "${OUTPUT_CHANGELOG}" "${URL_CHANGELOG}"
             ghr \
             -t ${GITHUB_TOKEN} \
             -u ${CIRCLE_PROJECT_USERNAME} \
@@ -78,6 +86,17 @@ jobs:
             -b "${BODY}" \
             -c ${CIRCLE_SHA1}  \
             -delete ${CIRCLE_TAG}
+            
+  export-env-var:
+    docker:
+      - image: circleci/ruby:latest
+    steps:
+      - mem/remember:
+          env_var: DATE_FORMAT
+          value: "%d-%m-%y"
+      - mem/remember:
+          env_var: OUTPUT_CHANGELOG
+          value: CHANGELOG.md
 
 orb_promotion_filters: &orb_promotion_filters
   branches:
@@ -162,24 +181,33 @@ workflows:
       - hold-for-approval:
           type: approval
           filters: *orb_promotion_filters
+      - export-env-var:
+          filter: *orb_promotion_filters
+          requires: [hold-for-approval]
       - orb-tools/dev-promote-prod-from-git-tag:
           orb-name: onimur/github-changelog-generator
           context: main-context
           add-pr-comment: true
           bot-user: onimurCI-bot
           bot-token-variable: GITHUB_TOKEN
-          requires:
-            - hold-for-approval
+          requires: [export-env-var]
           filters: *orb_promotion_filters
       - publish-github-release:
           context: main-context
           requires: [orb-tools/dev-promote-prod-from-git-tag]
           filters: *orb_promotion_filters
-      - changelog/changelog-default:
+      - changelog/changelog-custom:
           context: main-context
+          steps:
+            - mem/recall:
+                env_var: DATE_FORMAT
+            - mem/recall:
+                env_var: OUTPUT_CHANGELOG
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
           token: GITHUB_TOKEN
+          date-format: ${DATE_FORMAT}
+          output: ${OUTPUT_CHANGELOG}
           push-git: true
           filters: *orb_promotion_filters
           requires: [publish-github-release]
