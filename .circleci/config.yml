@@ -39,7 +39,7 @@ commands:
           value: CHANGELOG.md
 
 jobs:
-  integration-tests-for-github-changelog-generator:
+  integration-tests-for-changelog-commands:
     docker:
        - image: circleci/ruby:latest
     executor: orb-tools/ubuntu
@@ -76,6 +76,7 @@ jobs:
           output: ${OUTPUT_FILE}
       - store_artifacts:
           path: ./artifacts
+  
   #publish on github releases
   publish-github-release:
     docker:
@@ -103,6 +104,27 @@ jobs:
             -b "${BODY}" \
             -c ${CIRCLE_SHA1}  \
             -delete ${CIRCLE_TAG}
+
+  check-artifacts-without-checkout:
+    machine: true
+    steps:
+      - attach_workspace:
+          at: .
+      - run: find .
+      - attach_workspace:
+          at: "versioning-log"
+      - run: find .
+
+  check-artifacts-with-checkout:
+    machine: true
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: find .
+      - attach_workspace:
+          at: "versioning-log"
+      - run: find .
 
 orb_promotion_filters: &orb_promotion_filters
   branches:
@@ -144,9 +166,18 @@ workflows:
   integration_tests-prod_deploy:
     when: << pipeline.parameters.run-integration-tests >>
     jobs:
-      # Run my ORB
-      - integration-tests-for-github-changelog-generator:
+      # Run my ORB Commands and Jobs
+      - integration-tests-for-changelog-commands:
           context: main-context
+      - github-changelog-generator/changelog-custom:
+          context: main-context
+          steps:
+            - checkout
+          output: CHANGELOG_JOB.md
+          git-push: false
+          
+       - check-artifacts-without-checkout
+       - check-artifacts-with-checkout
 
       # Actually publish the orb
       # Promote a dev version of an orb to a semantic production release.
@@ -165,7 +196,7 @@ workflows:
           context: main-context
           orb-name: onimur/github-changelog-generator
           publish-version-tag: true
-          requires: [integration-tests-for-github-changelog-generator]
+          requires: [integration-tests-for-changelog-commands]
           filters:
             branches:
               only: master
