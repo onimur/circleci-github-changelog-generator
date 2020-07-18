@@ -1,0 +1,16 @@
+description: |
+  Get the parameters in /your-dir/tmp
+parameters:
+  dir:
+    default: ${CIRCLE_PROJECT_USERNAME}
+    description: |
+      Directory created in the tmp folder to store files or directories.
+    type: string
+  file-or-dir:
+    default:""
+    description: |
+      Optional parameter if you want to inform the directory after the tmp folder. E.g/your-dir/tmp/file-or-dir
+
+steps:
+  - attach_workspace:
+      at: /<<parameters.dir>>/tmp

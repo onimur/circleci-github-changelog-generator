@@ -80,14 +80,6 @@ steps:
       condition: <<parameters.git-push>>
       requires: [changelog]
       steps:
-        - run:
-            name: Save changelog to tmp
-            command: |
-              mkdir -p tmp
-              find -iname 'CHANGELOG.md' -exec cp {} ./tmp/ \;
-        - store_artifacts:
-            path: tmp
-        - persist_to_workspace:
-            root: ./
-            paths:
-              - tmp/*
+        - persist-to-dir:
+            output: CHANGELOG.md
+            store-artifacts: true

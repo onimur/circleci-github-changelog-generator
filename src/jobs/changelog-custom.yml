@@ -406,14 +406,6 @@ steps:
       condition: <<parameters.git-push>>
       requires: [changelog]
       steps:
-        - run:
-            name: Save <<parameters.output>> to tmp
-            command: |
-              mkdir -p tmp
-              find -iname '<<parameters.output>>' -exec cp {} ./tmp/ \;
-        - store_artifacts:
-            path: tmp
-        - persist_to_workspace:
-            root: ./
-            paths:
-              - tmp/*
+        - persist-to-dir:
+            output: <<parameters.output>>
+            store-artifacts: true
