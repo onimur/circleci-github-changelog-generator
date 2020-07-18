@@ -7,7 +7,6 @@ parameters:
       Directory created in the tmp folder to store files or directories.
     type: string
   output:
-    default:
     description: |
       The file or directory you want to store.
     type: string
