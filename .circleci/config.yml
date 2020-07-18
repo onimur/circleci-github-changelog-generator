@@ -176,8 +176,8 @@ workflows:
           output: CHANGELOG_JOB.md
           git-push: false
           
-       - check-artifacts-without-checkout
-       - check-artifacts-with-checkout
+      - check-artifacts-without-checkout
+      - check-artifacts-with-checkout
 
       # Actually publish the orb
       # Promote a dev version of an orb to a semantic production release.
