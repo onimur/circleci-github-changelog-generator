@@ -80,8 +80,8 @@ workflows:
   tagged-publish: # run job for all tags
     jobs:
       - changelog/changelog-default:
-	      steps:
-		    - checkout
+          steps:
+            - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
           push-git: true                  # Push changelog to remote repository
@@ -106,8 +106,8 @@ workflows:
   tagged-publish: # run job for all tags
     jobs:
       - changelog/changelog-default:
-	      steps:
-		    - checkout
+          steps:
+            - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
           push-git: false                 # The changelog will be save on store artifacts (Circle CI)
@@ -136,8 +136,8 @@ workflows:
   tagged-publish: # run job for all tags
     jobs:
       - changelog/changelog-custom:
-	      steps:
-		    - checkout
+          steps:
+            - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
           push-git: true                  # Push changelog to remote repository
@@ -170,8 +170,8 @@ workflows:
   tagged-publish: # run job for all tags
     jobs:
       - changelog/changelog-custom:
-	      steps:
-		    - checkout
+          steps:
+            - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
           push-git: false                 # The changelog will be save on store artifacts (Circle CI)
