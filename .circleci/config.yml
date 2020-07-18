@@ -23,7 +23,7 @@ parameters:
   # job, by default.
   run-integration-tests:
     type: boolean
-    default: true
+    default: false
   dev-orb-version:
     type: string
     default: "dev:alpha"
