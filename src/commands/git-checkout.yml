@@ -1,0 +1,17 @@
+description: |
+  Checkout branch
+parameters:
+  branch:
+    default: master
+    description: |
+      Branch to checkout
+    type: string
+
+steps:
+  - run:
+      name: Checkout to <<parameters.branch>>
+      command: |
+        if [ -n "$CIRCLE_TAG" ]
+        then
+          git checkout -q -B "<<parameters.branch>>"
+        fi

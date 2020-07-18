@@ -325,20 +325,13 @@ parameters:
     type: string
 
 steps:
-  - checkout
   - steps: <<parameters.steps>>
   - when:
       condition: <<parameters.push-git>>
       steps:
-        - run:
-            name: Checkout to branch
-            command: |
-              if [ -n "$CIRCLE_TAG" ]
-              then
-                git reset --hard "$CIRCLE_SHA1"
-                git checkout -q -B "<<parameters.branch>>"
-              fi
-  - changelog-command:
+        - git-checkout:
+            branch: <<parameters.branch>>
+  - changelog:
       user: <<parameters.user>>
       project: <<parameters.project>>
       token: <<parameters.token>>
@@ -398,9 +391,9 @@ steps:
       strip-generator-notice: <<parameters.strip-generator-notice>>
   - when:
       condition: <<parameters.push-git>>
-      requires: [changelog-command]
+      requires: [changelog]
       steps:
-        - changelog-push-command:
+        - git-push:
             user: <<parameters.user>>
             project: <<parameters.project>>
             bot-name: <<parameters.bot-name>>
@@ -411,12 +404,16 @@ steps:
             branch: <<parameters.branch>>
   - unless:
       condition: <<parameters.push-git>>
-      requires: [changelog-command]
+      requires: [changelog]
       steps:
         - run:
-            name: Save changelog to artifacts
+            name: Save <<parameters.output>> to artifacts
             command: |
               mkdir -p artifacts
               find -iname '<<parameters.output>>' -exec cp {} ./artifacts/ \;
         - store_artifacts:
             path: artifacts
+        - persist_to_workspace:
+            root: ./
+            paths:
+              - artifacts/*

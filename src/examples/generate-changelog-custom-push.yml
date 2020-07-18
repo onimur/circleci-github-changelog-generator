@@ -16,6 +16,8 @@ usage:
     tagged-publish: # run job for all tags
       jobs:
         - github-changelog-generator/changelog-custom:
+            steps:
+              - checkout
             context: your-context           # Case contain your Github Token
             token: GITHUB_TOKEN             # Token as env_var
             push-git: true                  # Push changelog to remote repository

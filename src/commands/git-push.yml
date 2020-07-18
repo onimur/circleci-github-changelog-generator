@@ -1,5 +1,5 @@
 description: |
-  Push the CHANGELOG.md to github
+  Push the files to github
 parameters:
   user:
     default: CIRCLE_PROJECT_USERNAME
@@ -56,7 +56,7 @@ steps:
           fi
         fi
   - run:
-      name: Push the CHANGELOG.md to Github
+      name: Push the <<parameters.output>> to Github
       command: |
         git add ./<<parameters.output>>
         git diff-index --quiet HEAD || git commit -m "<<parameters.commit-message>> [skip ci]"
