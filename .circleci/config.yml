@@ -27,6 +27,16 @@ parameters:
   dev-orb-version:
     type: string
     default: "dev:alpha"
+    
+commands:
+  export-env-var:
+    steps:
+      - mem/remember:
+          env_var: DATE_FORMAT
+          value: "%d-%m-%y"
+      - mem/remember:
+          env_var: OUTPUT_CHANGELOG
+          value: CHANGELOG.md
 
 jobs:
   integration-tests-for-github-changelog-generator:
@@ -35,6 +45,7 @@ jobs:
     executor: orb-tools/ubuntu
 
     steps:
+      - export-env-var
       - checkout
       # Test your orb e.g.
       - github-changelog-generator/git-checkout
@@ -92,17 +103,6 @@ jobs:
             -c ${CIRCLE_SHA1}  \
             -delete ${CIRCLE_TAG}
 
-  export-env-var:
-    docker:
-      - image: circleci/ruby:latest
-    steps:
-      - mem/remember:
-          env_var: DATE_FORMAT
-          value: "%d-%m-%y"
-      - mem/remember:
-          env_var: OUTPUT_CHANGELOG
-          value: CHANGELOG.md
-
 orb_promotion_filters: &orb_promotion_filters
   branches:
     ignore: /.*/
@@ -143,11 +143,9 @@ workflows:
   integration_tests-prod_deploy:
     when: << pipeline.parameters.run-integration-tests >>
     jobs:
-      - export-env-var
       # Run my ORB
       - integration-tests-for-github-changelog-generator:
           context: main-context
-          requires: [export-env-var]
 
       # Actually publish the orb
       # Promote a dev version of an orb to a semantic production release.
@@ -188,16 +186,13 @@ workflows:
       - hold-for-approval:
           type: approval
           filters: *orb_promotion_filters
-      - export-env-var:
-          filters: *orb_promotion_filters
-          requires: [hold-for-approval]
       - orb-tools/dev-promote-prod-from-git-tag:
           orb-name: onimur/github-changelog-generator
           context: main-context
           add-pr-comment: true
           bot-user: onimurCI-bot
           bot-token-variable: GITHUB_TOKEN
-          requires: [export-env-var]
+          requires: [hold-for-approval]
           filters: *orb_promotion_filters
       - publish-github-release:
           context: main-context
@@ -206,6 +201,7 @@ workflows:
       - changelog/changelog-custom:
           context: main-context
           steps:
+            - export-env-var
             - mem/recall:
                 env_var: DATE_FORMAT
             - mem/recall:
