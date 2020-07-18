@@ -83,7 +83,7 @@ steps:
         - run:
             name: Save changelog to tmp
             command: |
-              mkdir -p versioning-log
+              mkdir -p tmp
               find -iname 'CHANGELOG.md' -exec cp {} ./tmp/ \;
         - store_artifacts:
             path: tmp

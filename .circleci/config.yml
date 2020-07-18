@@ -113,7 +113,7 @@ jobs:
           at: .
       - run: find .
       - attach_workspace:
-          at: versioning-log
+          at: tmp
       - run: find .
       - attach_workspace:
           at: ~/
@@ -130,7 +130,7 @@ jobs:
           at: .
       - run: find .
       - attach_workspace:
-          at: versioning-log
+          at: tmp
       - run: find .
       - attach_workspace:
           at: ~/
@@ -187,8 +187,10 @@ workflows:
           steps:
             - checkout
           output: CHANGELOG_JOB.md
-      - check-artifacts-without-checkout
-      - check-artifacts-with-checkout
+      - check-artifacts-without-checkout:
+          requires: [github-changelog-generator/changelog-custom]
+      - check-artifacts-with-checkout:
+          requires: [github-changelog-generator/changelog-custom]
 
       # Actually publish the orb
       # Promote a dev version of an orb to a semantic production release.
