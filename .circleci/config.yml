@@ -81,6 +81,7 @@ jobs:
     docker:
       - image: cibuilds/github:0.13
     steps:
+      - export-env-var
       - checkout
       - mem/recall:
           env_var: DATE_FORMAT
