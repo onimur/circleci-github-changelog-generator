@@ -174,7 +174,6 @@ workflows:
           steps:
             - checkout
           output: CHANGELOG_JOB.md
-          git-push: false
           
       - check-artifacts-without-checkout
       - check-artifacts-with-checkout
