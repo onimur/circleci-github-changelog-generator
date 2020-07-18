@@ -13,5 +13,6 @@ steps:
       command: |
         if [ -n "$CIRCLE_TAG" ]
         then
+          git reset --hard "$CIRCLE_SHA1"
           git checkout -q -B "<<parameters.branch>>"
         fi

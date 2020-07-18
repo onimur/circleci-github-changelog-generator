@@ -51,7 +51,7 @@ steps:
   - run:
       command: |
         if [ -z "${CIRCLE_TAG+x}" ]; then
-          if [[ "$(git show -s --format=%B | head -n 1)" == "<<parameters.commit-message>>" ]]; then
+          if [[ "$(git show -s --format=%B | head -n 1)" == "<<parameters.commit-message>>  [skip ci]" ]]; then
               circleci-agent step halt
           fi
         fi

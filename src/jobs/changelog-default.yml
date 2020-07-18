@@ -81,13 +81,13 @@ steps:
       requires: [changelog]
       steps:
         - run:
-            name: Save changelog to artifacts
+            name: Save changelog to versioning-log
             command: |
-              mkdir -p artifacts
-              find -iname 'CHANGELOG.md' -exec cp {} ./artifacts/ \;
+              mkdir -p versioning-log
+              find -iname 'CHANGELOG.md' -exec cp {} ./versioning-log/ \;
         - store_artifacts:
-            path: artifacts
+            path: versioning-log
         - persist_to_workspace:
             root: ./
             paths:
-              - artifacts/*
+              - versioning-log/*
