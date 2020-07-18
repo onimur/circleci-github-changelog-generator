@@ -110,16 +110,7 @@ jobs:
     machine: true
     steps:
       - attach_workspace:
-          at: .
-      - run: find .
-      - attach_workspace:
           at: tmp
-      - run: find .
-      - attach_workspace:
-          at: ~/
-      - run: find .
-      - attach_workspace:
-          at: ./
       - run: find .
 
   check-artifacts-with-checkout:
@@ -127,17 +118,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: .
-      - run: find .
-      - attach_workspace:
           at: tmp
-      - run: find .
-      - attach_workspace:
-          at: ~/
-      - run: find .
-      - attach_workspace:
-          at: ./
-      - run: find .
 
 orb_promotion_filters: &orb_promotion_filters
   branches:
@@ -257,6 +238,6 @@ workflows:
           token: GITHUB_TOKEN
           date-format: ${DATE_FORMAT}
           output: ${OUTPUT_CHANGELOG}
-          push-git: true
+          git-push: true
           filters: *orb_promotion_filters
           requires: [publish-github-release]
