@@ -1,0 +1,37 @@
+description: |
+  Save parameters to /your-dir/tmp
+parameters:
+  dir:
+    default: ${CIRCLE_PROJECT_USERNAME}
+    description: |
+      Directory created in the tmp folder to store files or directories.
+    type: string
+  output:
+    default:
+    description: |
+      The file or directory you want to store.
+    type: string
+  store-artifacts:
+    default: false
+    description: |
+      If you want to send to the artifact storage.
+    type: boolean
+
+steps:
+  - run:
+      name: Save <<parameters.output>> to /<<parameters.dir>>/tmp
+      command: |
+        path_dir="/<<parameters.dir>>/tmp"
+        mkdir -p $(dirname ${path_dir})
+        # find -iname '<<parameters.output>>' -exec cp {} .${path_dir}/ \;
+        cp -r <<parameters.output>> ${path_dir}/
+  - persist_to_workspace:
+      root: /<<parameters.dir>>
+      paths:
+        - tmp
+  - run: echo "parameters save in: /<<parameters.dir>>/tmp"
+  - when:
+      condition: <<parameters.store-artifacts>>
+      steps:
+        - store_artifacts:
+          path: /<<parameters.dir>>/tmp
