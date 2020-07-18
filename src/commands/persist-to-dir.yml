@@ -1,8 +1,8 @@
 description: |
-  Save parameters to /your-dir/tmp
+  Save parameters to /tmp/your-dir/temp
 parameters:
   dir:
-    default: ${CIRCLE_PROJECT_USERNAME}
+    default: automate
     description: |
       Directory created in the tmp folder to store files or directories.
     type: string
@@ -18,22 +18,22 @@ parameters:
 
 steps:
   - run:
-      name: Save <<parameters.file-or-dir>> to /<<parameters.dir>>/tmp
+      name: Save <<parameters.file-or-dir>> to /tmp/<<parameters.dir>>/temp
       command: |
-        path_dir="/<<parameters.dir>>/tmp"
+        path_dir="/tmp/<<parameters.dir>>/temp"
         mkdir -p $(dirname ${path_dir})
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${path_dir}/ \;
         cp -r <<parameters.file-or-dir>> ${path_dir}/
   - persist_to_workspace:
-      root: /<<parameters.dir>>
+      root: /tmp/<<parameters.dir>>
       paths:
-        - tmp
+        - temp
   - run:
       name: Parameters save
       command: |
-        echo "parameters save in: /<<parameters.dir>>/tmp"
+        echo "parameters save in: /tmp/<<parameters.dir>>/temp"
   - when:
       condition: <<parameters.store-artifacts>>
       steps:
         - store_artifacts:
-            path: /<<parameters.dir>>/tmp
+            path: /tmp/<<parameters.dir>>/temp
