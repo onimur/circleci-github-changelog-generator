@@ -10,11 +10,12 @@ orbs:
   # publish manually once before this worklow can succeed)
   github-changelog-generator: onimur/github-changelog-generator@<<pipeline.parameters.dev-orb-version>>
 
-orb_prep_jobs: &orb_prep_jobs
+orb_integration: &orb_integration
   [
-    orb-tools/lint,
-    orb-tools/shellcheck,
-    orb-tools/pack
+    integration-tests-for-changelog-commands,
+    github-changelog-generator/changelog-custom,
+    check-artifacts-without-checkout,
+    check-artifacts-with-checkout
   ]
 
 # Pipeline parameters
@@ -112,7 +113,13 @@ jobs:
           at: .
       - run: find .
       - attach_workspace:
-          at: "versioning-log"
+          at: versioning-log
+      - run: find .
+      - attach_workspace:
+          at: ~/
+      - run: find .
+      - attach_workspace:
+          at: ./
       - run: find .
 
   check-artifacts-with-checkout:
@@ -123,7 +130,13 @@ jobs:
           at: .
       - run: find .
       - attach_workspace:
-          at: "versioning-log"
+          at: versioning-log
+      - run: find .
+      - attach_workspace:
+          at: ~/
+      - run: find .
+      - attach_workspace:
+          at: ./
       - run: find .
 
 orb_promotion_filters: &orb_promotion_filters
@@ -194,7 +207,7 @@ workflows:
           context: main-context
           orb-name: onimur/github-changelog-generator
           publish-version-tag: true
-          requires: [integration-tests-for-changelog-commands]
+          requires: *orb_integration
           filters:
             branches:
               only: master
