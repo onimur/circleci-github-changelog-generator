@@ -407,5 +407,5 @@ steps:
       requires: [changelog]
       steps:
         - persist-to-dir:
-            output: <<parameters.output>>
+            file-or-dir: <<parameters.output>>
             store-artifacts: true

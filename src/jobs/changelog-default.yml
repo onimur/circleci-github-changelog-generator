@@ -81,5 +81,5 @@ steps:
       requires: [changelog]
       steps:
         - persist-to-dir:
-            output: CHANGELOG.md
+            file-or-dir: CHANGELOG.md
             store-artifacts: true

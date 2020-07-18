@@ -6,7 +6,7 @@ parameters:
     description: |
       Directory created in the tmp folder to store files or directories.
     type: string
-  output:
+  file-or-dir:
     description: |
       The file or directory you want to store.
     type: string
@@ -18,12 +18,12 @@ parameters:
 
 steps:
   - run:
-      name: Save <<parameters.output>> to /<<parameters.dir>>/tmp
+      name: Save <<parameters.file-or-dir>> to /<<parameters.dir>>/tmp
       command: |
         path_dir="/<<parameters.dir>>/tmp"
         mkdir -p $(dirname ${path_dir})
-        # find -iname '<<parameters.output>>' -exec cp {} .${path_dir}/ \;
-        cp -r <<parameters.output>> ${path_dir}/
+        # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${path_dir}/ \;
+        cp -r <<parameters.file-or-dir>> ${path_dir}/
   - persist_to_workspace:
       root: /<<parameters.dir>>
       paths:
@@ -36,4 +36,4 @@ steps:
       condition: <<parameters.store-artifacts>>
       steps:
         - store_artifacts:
-          path: /<<parameters.dir>>/tmp
+            path: /<<parameters.dir>>/tmp
