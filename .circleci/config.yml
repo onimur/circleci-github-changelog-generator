@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   orb-tools: circleci/orb-tools@9.1.0
   queue: eddiewebb/queue@1.5.0
-  changelog: onimur/github-changelog-generator@2.1.4
+  changelog: onimur/github-changelog-generator@2.1.5
   mem: circleci/rememborb@0.0.1
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
@@ -238,6 +238,6 @@ workflows:
           token: GITHUB_TOKEN
           date-format: ${DATE_FORMAT}
           output: ${OUTPUT_CHANGELOG}
-          push-git: true
+          git-push: true
           filters: *orb_promotion_filters
           requires: [publish-github-release]
