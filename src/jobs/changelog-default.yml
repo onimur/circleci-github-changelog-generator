@@ -30,7 +30,7 @@ parameters:
   git-push:
     default: false
     description: |
-      If true, Push the changelog to remote repository. Else store changelog to dir tmp
+      If true, Push the changelog to remote repository. Else store changelog to dir tmp/automate
     type: boolean
   #Parameters only to push changelog
   bot-name:

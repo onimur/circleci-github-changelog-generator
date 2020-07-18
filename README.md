@@ -200,7 +200,7 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | commit-message | Commit message                                                                                |     -    | Auto Update changelog    | string       |
 | executor       | Executor to use for this job. Defaults to this orb's default executor.                        |     -    | default                  | executor     |
 | project        | Name of project on GitHub.                                                                    |     -    | CIRCLE_PROJECT_REPONAME  | env_var_name |
-| git-push       | If true, Push the changelog to remote repository. Else store changelog to dir tmp             |     -    | false                    | boolean      |
+| git-push       | If true, Push the changelog to remote repository. Else store changelog to dir tmp/automate    |     -    | false                    | boolean      |
 | steps          | Any step before execute job. It can be used to export or retrieve some environment variable.  |     -    | []                       | steps        |
 | token          | To make more than 50 requests per hour your GitHub token is required.                         |     -    | GITHUB_TOKEN             | env_var_name |
 | user           | Username of the owner of target GitHub repo.                                                  |     -    | CIRCLE_PROJECT_USERNAME  | env_var_name |
@@ -256,7 +256,7 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | pr-wo-labels               | Include pull requests without labels in changelog. Default is true.                                                            |     -    | true                                                | boolean      |
 | project                    | Name of project on GitHub.                                                                                                     |     -    | CIRCLE_PROJECT_REPONAME                             | env_var_name |
 | pull-requests              | Include pull-requests in changelog. Default is true.                                                                           |     -    | true                                                | boolean      |
-| git-push                   | If true, Push the changelog to remote repository. Else store changelog to dir tmp                                              |     -    | false                                               | boolean      |
+| git-push                   | If true, Push the changelog to remote repository. Else store changelog to dir tmp/automate                                     |     -    | false                                               | boolean      |
 | release-branch             | Limit pull requests to the release branch, such as master or release.                                                          |     -    | ''                                                  | string       |
 | release-url                | The URL to point to for release links, in printf format (with the tag as variable).                                            |     -    | ''                                                  | string       |
 | removed-label              | Set up custom label for removed section. Default is "\*\*Removed:\*\*".                                                        |     -    | '\*\*Removed:\*\*'                                  | string       |
