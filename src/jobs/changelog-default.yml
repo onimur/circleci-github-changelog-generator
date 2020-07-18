@@ -83,11 +83,11 @@ steps:
         - run:
             name: Save changelog to versioning-log
             command: |
-              mkdir -p "versioning-log"
-              find -iname 'CHANGELOG.md' -exec cp {} ./"versioning-log"/ \;
+              mkdir -p versioning-log
+              find -iname 'CHANGELOG.md' -exec cp {} ./versioning-log/ \;
         - store_artifacts:
-            path: "versioning-log"
+            path: versioning-log
         - persist_to_workspace:
             root: ./
             paths:
-              - "versioning-log"/*
+              - versioning-log/*
