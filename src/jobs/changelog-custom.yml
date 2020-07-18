@@ -297,7 +297,7 @@ parameters:
     description: |
       Strip generator reference.
     type: boolean
-  push-git:
+  git-push:
     default: false
     description: |
       If true, Push the changelog to remote repository. Else store changelog to artifacts
@@ -327,7 +327,7 @@ parameters:
 steps:
   - steps: <<parameters.steps>>
   - when:
-      condition: <<parameters.push-git>>
+      condition: <<parameters.git-push>>
       steps:
         - git-checkout:
             branch: <<parameters.branch>>
@@ -390,7 +390,7 @@ steps:
       strip-headers: <<parameters.strip-headers>>
       strip-generator-notice: <<parameters.strip-generator-notice>>
   - when:
-      condition: <<parameters.push-git>>
+      condition: <<parameters.git-push>>
       requires: [changelog]
       steps:
         - git-push:
@@ -403,7 +403,7 @@ steps:
             output: <<parameters.output>>
             branch: <<parameters.branch>>
   - unless:
-      condition: <<parameters.push-git>>
+      condition: <<parameters.git-push>>
       requires: [changelog]
       steps:
         - run:

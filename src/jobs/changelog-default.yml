@@ -27,7 +27,7 @@ parameters:
     description: |
       To make more than 50 requests per hour your GitHub token is required.
     type: env_var_name
-  push-git:
+  git-push:
     default: false
     description: |
       If true, Push the changelog to remote repository. Else store changelog to artifacts
@@ -56,7 +56,7 @@ parameters:
 steps:
   - steps: <<parameters.steps>>
   - when:
-      condition: <<parameters.push-git>>
+      condition: <<parameters.git-push>>
       steps:
         - git-checkout:
             branch: <<parameters.branch>>
@@ -65,7 +65,7 @@ steps:
       project: <<parameters.project>>
       token: <<parameters.token>>
   - when:
-      condition: <<parameters.push-git>>
+      condition: <<parameters.git-push>>
       requires: [changelog]
       steps:
         - git-push:
@@ -77,7 +77,7 @@ steps:
             token: <<parameters.token>>
             branch: <<parameters.branch>>
   - unless:
-      condition: <<parameters.push-git>>
+      condition: <<parameters.git-push>>
       requires: [changelog]
       steps:
         - run:
