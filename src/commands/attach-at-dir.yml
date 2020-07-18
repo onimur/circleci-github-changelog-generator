@@ -10,7 +10,16 @@ parameters:
     default:""
     description: |
       Optional parameter if you want to inform the directory after the tmp folder. E.g/your-dir/tmp/file-or-dir
+    type: string
 
 steps:
-  - attach_workspace:
-      at: /<<parameters.dir>>/tmp
+  - unless:
+      condition: <<parameters.file-or-dir>>
+      steps:
+        - attach_workspace:
+            at: /<<parameters.dir>>/tmp
+  - when:
+      condition: <<parameters.file-or-dir>>
+      steps:
+        - attach_workspace:
+            at: /<<parameters.dir>>/tmp/<<parameters.file-or-dir>>

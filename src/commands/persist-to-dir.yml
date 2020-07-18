@@ -29,7 +29,10 @@ steps:
       root: /<<parameters.dir>>
       paths:
         - tmp
-  - run: echo "parameters save in: /<<parameters.dir>>/tmp"
+  - run:
+      name: Parameters save
+      command: |
+        echo "parameters save in: /<<parameters.dir>>/tmp"
   - when:
       condition: <<parameters.store-artifacts>>
       steps:
