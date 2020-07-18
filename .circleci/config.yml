@@ -37,7 +37,6 @@ jobs:
     steps:
       - checkout
       # Test your orb e.g.
-      - github-changelog-generator/git-checkout
       - mem/recall:
           env_var: DATE_FORMAT
       - run:
