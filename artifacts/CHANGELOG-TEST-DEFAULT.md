@@ -1,5 +1,9 @@
 # Changelog
 
+## [patch-release-v2.1.4](https://github.com/onimur/circleci-github-changelog-generator/tree/patch-release-v2.1.4) (18-07-20)
+
+[Full Changelog](https://github.com/onimur/circleci-github-changelog-generator/compare/patch-release-v2.1.3...patch-release-v2.1.4)
+
 ## [patch-release-v2.1.3](https://github.com/onimur/circleci-github-changelog-generator/tree/patch-release-v2.1.3) (18-07-20)
 
 [Full Changelog](https://github.com/onimur/circleci-github-changelog-generator/compare/patch-release-v2.1.2...patch-release-v2.1.3)
