@@ -295,7 +295,7 @@ steps:
       name: Run script and Update changelog
       command: |
         #!/bin/bash
-        #This script was written by: Jan Heinrich Reimer
+        #This script was written by Jan Heinrich Reimer and adapted by me (Murillo Comino).
         #in: https://github.com/heinrichreimer/action-github-changelog-generator/blob/master/entrypoint.sh
         #Only show last tag.
         if [[ "<<parameters.only-last-tag>>" = true ]] ; then
