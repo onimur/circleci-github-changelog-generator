@@ -113,16 +113,7 @@ jobs:
     machine: true
     steps:
       - attach_workspace:
-          at: /tmp/automate/temp
-      - run: find .
-      - attach_workspace:
           at: tmp/automate/
-      - run: find .
-      - attach_workspace:
-          at: ~/tmp/automate/
-      - run: find .
-      - attach_workspace:
-          at: /tmp/automate
       - run: find .
 
   check-artifacts-with-checkout:

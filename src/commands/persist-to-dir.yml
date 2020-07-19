@@ -20,19 +20,18 @@ steps:
   - run:
       name: Save <<parameters.file-or-dir>> to /tmp/<<parameters.dir>>/temp
       command: |
-        path_dir="/tmp/<<parameters.dir>>/temp/"
-        mkdir -p $path_dir
-        # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${path_dir}/ \;
+        echo 'export PATH_DIR="/tmp/<<parameters.dir>>/temp/"' >> $BASH_ENV
+        mkdir -p $PATH_DIR
+        # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${PATH_DIR}/ \;
         if [[ -d <<parameters.file-or-dir>> ]]; then
           echo "<<parameters.file-or-dir>> is a directory"
-          cp -r <<parameters.file-or-dir>> $path_dir
+          cp -r <<parameters.file-or-dir>> $PATH_DIR
         #
         elif [[ -f <<parameters.file-or-dir>> ]]; then
           echo "<<parameters.file-or-dir>> is a file"
-          cp <<parameters.file-or-dir>> $path_dir
+          cp <<parameters.file-or-dir>> $PATH_DIR
         fi
         #
-        find .
   - persist_to_workspace:
       root: /tmp/<<parameters.dir>>
       paths:
@@ -40,10 +39,9 @@ steps:
   - run:
       name: Parameters save
       command: |
-        find .
-        echo "parameters save in: /tmp/<<parameters.dir>>/temp"
+        echo "parameters save in: $PATH_DIR"
   - when:
       condition: <<parameters.store-artifacts>>
       steps:
         - store_artifacts:
-            path: /tmp/<<parameters.dir>>/temp
+            path: ${PATH_DIR}
