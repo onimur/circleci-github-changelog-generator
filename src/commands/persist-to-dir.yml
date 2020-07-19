@@ -21,7 +21,7 @@ steps:
       name: Save <<parameters.file-or-dir>> to /tmp/<<parameters.dir>>/temp
       command: |
         echo 'export PATH_DIR="/tmp/<<parameters.dir>>/temp/"' >> $BASH_ENV
-        mkdir -p $PATH_DIR
+        mkdir -p "$PATH_DIR"
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${PATH_DIR}/ \;
         if [[ -d "<<parameters.file-or-dir>>" ]]; then
           echo "<<parameters.file-or-dir>> is a directory"
@@ -44,4 +44,4 @@ steps:
       condition: <<parameters.store-artifacts>>
       steps:
         - store_artifacts:
-            path: ${PATH_DIR}
+            path: "${PATH_DIR}"
