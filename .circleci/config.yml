@@ -121,6 +121,9 @@ jobs:
       - attach_workspace:
           at: ~/tmp/automate/
       - run: find .
+      - attach_workspace:
+          at: /tmp/automate
+      - run: find .
 
   check-artifacts-with-checkout:
     machine: true
