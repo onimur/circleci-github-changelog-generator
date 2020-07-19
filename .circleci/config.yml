@@ -116,9 +116,6 @@ jobs:
           at: /tmp/automate/temp
       - run: find .
       - attach_workspace:
-          at: /tmp/automate/
-      - run: find .
-      - attach_workspace:
           at: tmp/automate/
       - run: find .
       - attach_workspace:
