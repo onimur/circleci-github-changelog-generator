@@ -24,6 +24,7 @@ steps:
         mkdir -p $(dirname ${path_dir})
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${path_dir}/ \;
         cp -r <<parameters.file-or-dir>> ${path_dir}
+        find .
   - persist_to_workspace:
       root: /tmp/<<parameters.dir>>
       paths:
