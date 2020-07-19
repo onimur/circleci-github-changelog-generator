@@ -4,6 +4,7 @@ orbs:
   orb-tools: circleci/orb-tools@9.2.1
   queue: eddiewebb/queue@1.5.0
   changelog: onimur/github-changelog-generator@2.1.5
+  persist: onimur/persist-files@0.0.2
   mem: circleci/rememborb@0.0.1
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
@@ -66,7 +67,7 @@ jobs:
           token: GITHUB_TOKEN
           date-format: ${DATE_FORMAT}
           output: ${OUTPUT_FILE}
-      - github-changelog-generator/persist-to-dir:
+      - persist/persist-to-dir:
           file-or-dir: ${OUTPUT_FILE}
           store-artifacts: true
       - run:
@@ -112,16 +113,14 @@ jobs:
   check-artifacts-without-checkout:
     machine: true
     steps:
-      - attach_workspace:
-          at: tmp/automate/
+      - persist/attach-at-dir
       - run: find .
 
   check-artifacts-with-checkout:
     machine: true
     steps:
       - checkout
-      - attach_workspace:
-          at: /tmp/automate/temp
+      - persist/attach-at-dir
       - run: find .
 
 orb_promotion_filters: &orb_promotion_filters
@@ -189,7 +188,7 @@ workflows:
           name: dev-promote-semver
           add-pr-comment: true
           fail-if-semver-not-indicated: false
-          bot-user: onimurCI-bot
+          bot-user: onimurci-bot
           bot-token-variable: GITHUB_TOKEN
           context: main-context
           orb-name: onimur/github-changelog-generator
@@ -220,7 +219,7 @@ workflows:
           orb-name: onimur/github-changelog-generator
           context: main-context
           add-pr-comment: true
-          bot-user: onimurCI-bot
+          bot-user: onimurci-bot
           bot-token-variable: GITHUB_TOKEN
           requires: [hold-for-approval]
           filters: *orb_promotion_filters
