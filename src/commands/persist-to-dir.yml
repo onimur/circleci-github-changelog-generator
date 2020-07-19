@@ -26,9 +26,9 @@ steps:
         cp -r <<parameters.file-or-dir>> $path_dir
         find .
   - persist_to_workspace:
-      root: ~/tmp/<<parameters.dir>>
+      root: /tmp/<<parameters.dir>>
       paths:
-        - temp/*
+        - temp/
   - run:
       name: Parameters save
       command: |
