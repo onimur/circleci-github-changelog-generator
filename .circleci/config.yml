@@ -115,6 +115,15 @@ jobs:
       - attach_workspace:
           at: /tmp/automate/temp
       - run: find .
+      - attach_workspace:
+          at: /tmp/automate/
+      - run: find .
+      - attach_workspace:
+          at: tmp/automate/
+      - run: find .
+      - attach_workspace:
+          at: ~/tmp/automate/
+      - run: find .
 
   check-artifacts-with-checkout:
     machine: true
@@ -122,6 +131,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/automate/temp
+      - run: find .
 
 orb_promotion_filters: &orb_promotion_filters
   branches:
