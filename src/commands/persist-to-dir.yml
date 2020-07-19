@@ -23,6 +23,7 @@ steps:
         path_dir="/tmp/<<parameters.dir>>/temp"
         path_dirr="./tmp/<<parameters.dir>>/temp"
         mkdir -p $(dirname ${path_dir})
+        mkdir -p $(dirname ${path_dirr})
         find $path_dir
         find $path_dirr
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${path_dir}/ \;
