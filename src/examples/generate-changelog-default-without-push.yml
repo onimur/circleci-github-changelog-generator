@@ -1,10 +1,14 @@
 description: >
-  Generate Changelog with default parameters and store the file on folder ./artifacts with persist_to_workspace (CIRCLECI)
+  Generate Changelog with default parameters and store the file on folder tmp/.persist
 usage:
   version: 2.1
 
   orbs:
     github-changelog-generator: onimur/github-changelog-generator@x.y.z
+
+    # This orb is optional to facilitate the recovery of the file that had been sent by "persist to workspace".
+    # You can check it out here: https://github.com/onimur/circleci-persist-files
+    persist: onimur/persist@x.y.z
 
   orb_tagged_filters: &orb_tagged_filters
     branches:
@@ -12,13 +16,26 @@ usage:
     tags:
       only: /^\d+\.\d+\.\d+$/ #for tag 1.2.3
 
+  jobs:
+    - print-changelog:
+        machine: true
+        steps:
+          - persist/attach-at-dir
+          - run:
+              name: Print Changelog
+              command: |
+                cat "./tmp/.persist/CHANGELOG.md"    
+
   workflows:
     changelog-generator:
       jobs:
         - github-changelog-generator/changelog-default:
-            steps:
+            steps-before:
               - checkout
             context: your-context           # Case contain your Github Token
             token: GITHUB_TOKEN             # Token as env_var
             push-git: false                 # Push changelog to remote repository
             filters: *orb_tagged_filters    # Trigger to only tag
+        - print-changelog:
+            filters: *orb_tagged_filters
+            requires: [github-changelog-generator/changelog-default]
