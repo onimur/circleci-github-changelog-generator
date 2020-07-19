@@ -80,7 +80,6 @@ jobs:
           output: ${OUTPUT_FILE}
       - store_artifacts:
           path: ./artifacts
-      - github-changelog-generator/attach-at-dir
 
   #publish on github releases
   publish-github-release:
