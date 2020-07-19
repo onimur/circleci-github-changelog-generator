@@ -7,10 +7,15 @@ parameters:
     description: |
       Executor to use for this job. Defaults to this orb's default executor.
     type: executor
-  steps:
+  steps-before:
     default: []
     description: |
       Any step before execute job. It can be used to export or retrieve some environment variable.
+    type: steps
+  steps-after:
+    default: []
+    description: |
+      Any step after execute job. It can be used to export or retrieve some environment variable.
     type: steps
   user:
     default: CIRCLE_PROJECT_USERNAME
@@ -30,7 +35,7 @@ parameters:
   git-push:
     default: false
     description: |
-      If true, Push the changelog to remote repository. Else store changelog to dir tmp/automate
+      If true, Push the changelog to remote repository. Else store changelog to dir tmp/.persist/
     type: boolean
   #Parameters only to push changelog
   bot-name:
@@ -54,7 +59,7 @@ parameters:
     type: string
 
 steps:
-  - steps: <<parameters.steps>>
+  - steps: <<parameters.steps-before>>
   - when:
       condition: <<parameters.git-push>>
       steps:
@@ -80,6 +85,7 @@ steps:
       condition: <<parameters.git-push>>
       requires: [changelog]
       steps:
-        - persist-to-dir:
+        - persist/persist-to-dir:
             file-or-dir: CHANGELOG.md
             store-artifacts: true
+  - steps: <<parameters.steps-after>>
