@@ -23,11 +23,11 @@ steps:
         echo 'export PATH_DIR="/tmp/<<parameters.dir>>/temp/"' >> $BASH_ENV
         mkdir -p $PATH_DIR
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${PATH_DIR}/ \;
-        if [[ -d <<parameters.file-or-dir>> ]]; then
+        if [[ -d "<<parameters.file-or-dir>>" ]]; then
           echo "<<parameters.file-or-dir>> is a directory"
           cp -r <<parameters.file-or-dir>> $PATH_DIR
         #
-        elif [[ -f <<parameters.file-or-dir>> ]]; then
+        elif [[ -f "<<parameters.file-or-dir>>" ]]; then
           echo "<<parameters.file-or-dir>> is a file"
           cp <<parameters.file-or-dir>> $PATH_DIR
         fi
