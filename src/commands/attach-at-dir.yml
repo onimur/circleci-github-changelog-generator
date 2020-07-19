@@ -17,7 +17,7 @@ steps:
       condition: <<parameters.file-or-dir>>
       steps:
         - attach_workspace:
-            at: /tmp/<<parameters.dir>>/temp
+            at: tmp/<<parameters.dir>>/temp
   - when:
       condition: <<parameters.file-or-dir>>
       steps:
