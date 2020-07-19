@@ -59,7 +59,7 @@ jobs:
       - run:
           name: Export env-var
           command: |
-            echo 'export OUTPUT_FILE="/artifacts/CHANGELOG-TEST-DEFAULT.md"' >> $BASH_ENV
+            echo 'export OUTPUT_FILE="./artifacts/CHANGELOG-TEST-DEFAULT.md"' >> $BASH_ENV
       - github-changelog-generator/changelog:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
