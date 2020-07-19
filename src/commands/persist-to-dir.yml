@@ -21,9 +21,9 @@ steps:
       name: Save <<parameters.file-or-dir>> to /tmp/<<parameters.dir>>/temp
       command: |
         path_dir="/tmp/<<parameters.dir>>/temp/"
-        mkdir -p $(dirname $path_dir)
+        mkdir -p $path_dir
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${path_dir}/ \;
-        cp -r <<parameters.file-or-dir>> ${path_dir}
+        cp -r <<parameters.file-or-dir>> $path_dir
         find .
   - persist_to_workspace:
       root: ~/tmp/<<parameters.dir>>
