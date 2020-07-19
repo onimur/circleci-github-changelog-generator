@@ -26,7 +26,7 @@ steps:
         find $path_dir
         find $path_dirr
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${path_dir}/ \;
-        cp -r <<parameters.file-or-dir>> ${path_dir}
+        # cp -r <<parameters.file-or-dir>> ${path_dir}
         cp -r <<parameters.file-or-dir>> ${path_dirr}
         find .
   - persist_to_workspace:
