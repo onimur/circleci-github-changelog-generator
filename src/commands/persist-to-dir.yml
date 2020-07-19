@@ -20,7 +20,7 @@ steps:
   - run:
       name: Save <<parameters.file-or-dir>> to /tmp/<<parameters.dir>>/temp
       command: |
-        echo 'export PATH_DIR="/tmp/<<parameters.dir>>/temp/"' >> $BASH_ENV
+        echo 'export PATH_DIR=(/tmp/<<parameters.dir>>/temp/)' >> $BASH_ENV
         mkdir -p "${PATH_DIR}"
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${PATH_DIR}/ \;
         if [[ -d "<<parameters.file-or-dir>>" ]]; then
