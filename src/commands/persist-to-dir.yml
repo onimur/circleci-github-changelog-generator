@@ -23,7 +23,15 @@ steps:
         path_dir="/tmp/<<parameters.dir>>/temp/"
         mkdir -p $path_dir
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .${path_dir}/ \;
-        cp -r <<parameters.file-or-dir>> $path_dir
+        if [[ -d <<parameters.file-or-dir>> ]]; then
+          echo "<<parameters.file-or-dir>> is a directory"
+          cp -r <<parameters.file-or-dir>> $path_dir
+        #
+        elif [[ -f <<parameters.file-or-dir>> ]]; then
+          echo "<<parameters.file-or-dir>> is a file"
+          cp <<parameters.file-or-dir>> $path_dir
+        fi
+        #
         find .
   - persist_to_workspace:
       root: /tmp/<<parameters.dir>>
