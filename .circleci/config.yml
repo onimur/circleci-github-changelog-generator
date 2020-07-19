@@ -66,9 +66,9 @@ jobs:
           token: GITHUB_TOKEN
           date-format: ${DATE_FORMAT}
           output: ${OUTPUT_FILE}
-#      - persist-to-dir:
-#          file-or-dir: ${OUTPUT_FILE}
-#          store-artifacts: true
+      - github-changelog-generator/persist-to-dir:
+          file-or-dir: ${OUTPUT_FILE}
+          store-artifacts: true
       - run:
           name: Create artifacts folder
           command: |
@@ -80,7 +80,7 @@ jobs:
           output: ${OUTPUT_FILE}
       - store_artifacts:
           path: ./artifacts
-#      - attach-at-dir
+      - github-changelog-generator/attach-at-dir
 
   #publish on github releases
   publish-github-release:
