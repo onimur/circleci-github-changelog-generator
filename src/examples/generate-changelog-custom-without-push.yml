@@ -23,7 +23,7 @@ usage:
           - run:
               name: Print Changelog
               command: |
-                cat "./tmp/.persist/CUSTOM-CHANGELOG.md"   
+                cat "./tmp/.persist/CUSTOM-CHANGELOG.md"
 
   workflows:
     tagged-publish: # run job for all tags

@@ -24,7 +24,7 @@ usage:
           - run:
               name: Print Changelog
               command: |
-                cat "./tmp/.persist/CHANGELOG.md"    
+                cat "./tmp/.persist/CHANGELOG.md"
 
   workflows:
     changelog-generator:
