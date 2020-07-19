@@ -23,14 +23,16 @@ steps:
         PATH_DIR="/tmp/<<parameters.dir>>/temp/"
         mkdir -p $PATH_DIR
         # find -iname '<<parameters.file-or-dir>>' -exec cp {} .$PATH_DIR/ \;
-        if [[ -d "<<parameters.file-or-dir>>" ]] ; then
-          echo "<<parameters.file-or-dir>> is a directory"
-          cp -r <<parameters.file-or-dir>> $PATH_DIR
-        elif [ -f "<<parameters.file-or-dir>>" ] ; then
-          echo "<<parameters.file-or-dir>> is a file"
-          cp <<parameters.file-or-dir>> $PATH_DIR
+        if [[ -d "<<parameters.file-or-dir>>" ]]
+        then
+            echo "<<parameters.file-or-dir>> is a directory"
+            cp -r <<parameters.file-or-dir>> $PATH_DIR
+        elif [[ -f "<<parameters.file-or-dir>>" ]]
+        then
+            echo "<<parameters.file-or-dir>> is a file"
+            cp <<parameters.file-or-dir>> $PATH_DIR
         else
-          echo "<<parameters.file-or-dir>> is not valid"
+            echo "<<parameters.file-or-dir>> is not valid"
         fi
   - persist_to_workspace:
       root: /tmp/<<parameters.dir>>
