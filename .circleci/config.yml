@@ -168,7 +168,7 @@ workflows:
           context: main-context
       - github-changelog-generator/changelog-custom:
           context: main-context
-          steps:
+          steps-before:
             - checkout
           output: CHANGELOG_JOB.md
       - check-artifacts-without-checkout:
