@@ -17,20 +17,21 @@ usage:
       only: /^\d+\.\d+\.\d+$/ #for tag 1.2.3
 
   jobs:
-    machine: true
-    steps:
-      - persist/attach-at-dir
-      - run:
-          name: Print changelog
-          command: |
-            find .
-            if [[ -f "./tmp/.persist/CHANGELOG.md" ]] ; then
-              cat "./tmp/.persist/CHANGELOG.md.txt"
-              echo "This is a file - Test Pass"
-            else
-              echo "This is not a file"
-              exit 1
-            fi
+    print-changelog:
+      machine: true
+      steps:
+        - persist/attach-at-dir
+        - run:
+            name: Print changelog
+            command: |
+              find .
+              if [[ -f "./tmp/.persist/CHANGELOG.md" ]] ; then
+                cat "./tmp/.persist/CHANGELOG.md.txt"
+                echo "This is a file - Test Pass"
+              else
+                echo "This is not a file"
+                exit 1
+              fi
 
   workflows:
     changelog-generator:
