@@ -320,7 +320,6 @@ parameters:
     type: string
 
 steps:
-  - steps: <<parameters.steps-before>>
   - when:
       condition: <<parameters.git-push>>
       steps:
