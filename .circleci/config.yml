@@ -4,7 +4,7 @@ orbs:
   orb-tools: circleci/orb-tools@9.2.1
   queue: eddiewebb/queue@1.5.0
   changelog: onimur/github-changelog-generator@2.1.5
-  persist: onimur/persist-files@0.0.3
+  persist: onimur/persist-files@0.0.4
   mem: circleci/rememborb@0.0.1
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
@@ -67,8 +67,9 @@ jobs:
           token: GITHUB_TOKEN
           date-format: ${DATE_FORMAT}
           output: ${OUTPUT_FILE}
+          strip-generator-notice: true
       - persist/persist-to-dir:
-          file-or-dir: ${OUTPUT_FILE}
+          paths: ${OUTPUT_FILE}
           store-artifacts: true
       - run:
           name: Create artifacts folder
@@ -81,6 +82,19 @@ jobs:
           output: ${OUTPUT_FILE}
       - store_artifacts:
           path: /artifacts
+
+  check-artifacts-without-checkout:
+    machine: true
+    steps:
+      - persist/attach-at-dir
+      - run: find .
+
+  check-artifacts-with-checkout:
+    machine: true
+    steps:
+      - checkout
+      - persist/attach-at-dir
+      - run: find .
 
   #publish on github releases
   publish-github-release:
@@ -109,19 +123,6 @@ jobs:
             -b "${BODY}" \
             -c ${CIRCLE_SHA1}  \
             -delete ${CIRCLE_TAG}
-
-  check-artifacts-without-checkout:
-    machine: true
-    steps:
-      - persist/attach-at-dir
-      - run: find .
-
-  check-artifacts-with-checkout:
-    machine: true
-    steps:
-      - checkout
-      - persist/attach-at-dir
-      - run: find .
 
 orb_promotion_filters: &orb_promotion_filters
   branches:
@@ -168,7 +169,7 @@ workflows:
           context: main-context
       - github-changelog-generator/changelog-custom:
           context: main-context
-          steps-before:
+          pre-steps:
             - checkout
           output: CHANGELOG_JOB.md
       - check-artifacts-without-checkout:
