@@ -384,7 +384,7 @@ steps:
       strip-headers: <<parameters.strip-headers>>
       strip-generator-notice: <<parameters.strip-generator-notice>>
   - when:
-      requires: [changelog]
+      condition: <<parameters.git-push>>
       steps:
         - git-push:
             user: <<parameters.user>>
@@ -397,7 +397,6 @@ steps:
             branch: <<parameters.branch>>
   - unless:
       condition: <<parameters.git-push>>
-      requires: [changelog]
       steps:
         - persist/persist-to-dir:
             paths: <<parameters.output>>
