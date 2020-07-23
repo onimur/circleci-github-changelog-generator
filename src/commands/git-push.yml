@@ -43,21 +43,19 @@ parameters:
 
 steps:
   - run:
-      name: Config git
+      name: Push the <<parameters.output>> to Github
       command: |
+        # Config git
         git config credential.helper 'cache --timeout=120'
         git config user.name "<<parameters.bot-name>>"
         git config user.email "<<parameters.bot-email>>"
-  - run:
-      command: |
+        # Check tag
         if [ -z "${CIRCLE_TAG+x}" ]; then
           if [[ "$(git show -s --format=%B | head -n 1)" == "<<parameters.commit-message>>  [skip ci]" ]]; then
               circleci-agent step halt
           fi
         fi
-  - run:
-      name: Push the <<parameters.output>> to Github
-      command: |
+        # Push changelog
         git add ./<<parameters.output>>
         git diff-index --quiet HEAD || git commit -m "<<parameters.commit-message>> [skip ci]"
         # Push quietly to prevent showing the token in log
