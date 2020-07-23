@@ -67,7 +67,6 @@ jobs:
           token: GITHUB_TOKEN
           date-format: ${DATE_FORMAT}
           output: ${OUTPUT_FILE}
-          strip-generator-notice: true
       - persist/persist-to-dir:
           paths: ${OUTPUT_FILE}
           store-artifacts: true
