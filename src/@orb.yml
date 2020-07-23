@@ -9,4 +9,4 @@ display:
   source_url: "https://github.com/onimur/circleci-github-changelog-generator"
 
 orbs:
-  persist: onimur/persist-files@0.0.2
+  persist: onimur/persist-files@0.0.4
