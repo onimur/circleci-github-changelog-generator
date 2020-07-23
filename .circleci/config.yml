@@ -229,7 +229,7 @@ workflows:
           filters: *orb_promotion_filters
       - changelog/changelog-custom:
           context: main-context
-          steps:
+          pre-steps:
             - checkout
             - export-env-var
             - mem/recall:
