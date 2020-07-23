@@ -1,5 +1,5 @@
 description: >
-  Generate Changelog with custom parameters and store the file on folder tmp/.persist
+  Generate Changelog with custom parameters and store the file on folder ./persist
 usage:
   version: 2.1
 
@@ -24,8 +24,8 @@ usage:
             name: Print changelog
             command: |
               find .
-              if [[ -f "./tmp/.persist/CUSTOM-CHANGELOG.md" ]] ; then
-                cat "./tmp/.persist/CUSTOM-CHANGELOG.md.txt"
+              if [[ -f "./persist/CUSTOM-CHANGELOG.md" ]] ; then
+                cat "./persist/CUSTOM-CHANGELOG.md.txt"
                 echo "This is a file - Test Pass"
               else
                 echo "This is not a file"
@@ -36,7 +36,7 @@ usage:
     tagged-publish: # run job for all tags
       jobs:
         - github-changelog-generator/changelog-custom:
-            steps-before:
+            pre-steps:
               - checkout
             context: your-context           # Case contain your Github Token
             token: GITHUB_TOKEN             # Token as env_var

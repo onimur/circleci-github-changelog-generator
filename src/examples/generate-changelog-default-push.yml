@@ -16,7 +16,7 @@ usage:
     changelog-generator:
       jobs:
         - github-changelog-generator/changelog-default:
-            steps-before:
+            pre-steps:
               - checkout
             context: your-context           # Case contain your Github Token
             token: GITHUB_TOKEN             # Token as env_var
