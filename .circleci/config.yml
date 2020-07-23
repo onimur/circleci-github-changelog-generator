@@ -4,7 +4,7 @@ orbs:
   orb-tools: circleci/orb-tools@9.2.1
   queue: eddiewebb/queue@1.5.0
   changelog: onimur/github-changelog-generator@2.1.6
-  persist: onimur/persist-files@0.0.4
+  persist: onimur/persist-files@0.0.5
   mem: circleci/rememborb@0.0.1
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
