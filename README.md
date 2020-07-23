@@ -19,7 +19,7 @@ This orb is registered with CircleCI, see [here](https://circleci.com/orbs/regis
 
 <p align="center">
     <a href="https://circleci.com/orbs/registry/orb/onimur/github-changelog-generator" title="CircleCI Github Changelog Generator">
-        <img width="45%" src=".github/resources/logo_git.png">
+        <img width="35%" src=".github/resources/logo_git.png">
     </a>
 </p>
 
@@ -80,7 +80,7 @@ workflows:
   tagged-publish: # run job for all tags
     jobs:
       - changelog/changelog-default:
-          steps:
+          pre-steps:
             - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
@@ -106,7 +106,7 @@ workflows:
   tagged-publish: # run job for all tags
     jobs:
       - changelog/changelog-default:
-          steps:
+          pre-steps:
             - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
@@ -136,20 +136,20 @@ workflows:
   tagged-publish: # run job for all tags
     jobs:
       - changelog/changelog-custom:
-          steps:
+          pre-steps:
             - checkout
-          context: your-context           # Case contain your Github Token
-          token: GITHUB_TOKEN             # Token as env_var
-          git-push: true                  # Push changelog to remote repository
-          commit-message: Update changelog
-          bot-name: my-bot
-          bot-email: my-bot@email.com
-          header-label: "# My Changelog"
-          date-format: "%d-%m-%Y"
-          output: CUSTOM-CHANGELOG.md
+          context: your-context               # Case contain your Github Token
+          token: GITHUB_TOKEN                 # Token as env_var
+          git-push: true                      # Push changelog to remote repository
+          commit-message: Update changelog    # Custom commit message
+          bot-name: my-bot                    # Custom bot name
+          bot-email: my-bot@email.com         # Custom bot email
+          header-label: "# My Changelog"      # Header Label to changelog
+          date-format: "%d-%m-%Y"             # Date format to show
+          output: CUSTOM-CHANGELOG.md         # Output Changelog md
           breaking-label: "**Breaking**"
           bugs-label: "**Bugs**"
-          filters: *orb_tagged_filters    # Trigger to only tag
+          filters: *orb_tagged_filters        # Trigger to only tag
 ```
 
 ### Without push
@@ -170,7 +170,7 @@ workflows:
   tagged-publish: # run job for all tags
     jobs:
       - changelog/changelog-custom:
-          steps:
+          pre-steps:
             - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
@@ -191,32 +191,32 @@ You can check the list of all commands [here](https://github.com/github-changelo
 ### Job Default
 <details>
   <summary>Click to expand!</summary>
-  
-|    parameter   |                                           description                                         | required |          default         |     type     |
-|:--------------:|:---------------------------------------------------------------------------------------------:|:--------:|:------------------------:|:------------:|
-| bot-email      | Email to commit                                                                               |     -    | circleci@bot-noreply.com | string       |
-| bot-name       | User name to commit                                                                           |     -    | CircleCI-bot             | string       |
-| branch         | Branch to push changelog                                                                      |     -    | master                   | string       |
-| commit-message | Commit message                                                                                |     -    | Auto Update changelog    | string       |
-| executor       | Executor to use for this job. Defaults to this orb's default executor.                        |     -    | default                  | executor     |
-| project        | Name of project on GitHub.                                                                    |     -    | CIRCLE_PROJECT_REPONAME  | env_var_name |
-| git-push       | If true, Push the changelog to remote repository. Else store changelog to dir tmp/automate    |     -    | false                    | boolean      |
-| steps          | Any step before execute job. It can be used to export or retrieve some environment variable.  |     -    | []                       | steps        |
-| token          | To make more than 50 requests per hour your GitHub token is required.                         |     -    | GITHUB_TOKEN             | env_var_name |
-| user           | Username of the owner of target GitHub repo.                                                  |     -    | CIRCLE_PROJECT_USERNAME  | env_var_name |
+
+|    parameter   |                                              description                                             | required |          default         |     type     |
+|:--------------:|:----------------------------------------------------------------------------------------------------:|:--------:|:------------------------:|:------------:|
+| bot-email      | Email to commit                                                                                      |     -    | circleci@bot-noreply.com | string       |
+| bot-name       | User name to commit                                                                                  |     -    | circleci-bot             | string       |
+| branch         | Branch to push changelog                                                                             |     -    | master                   | string       |
+| commit-message | Commit message                                                                                       |     -    | Auto Update changelog    | string       |
+| executor       | Executor to use for this job. Defaults to this orb's default executor.                               |     -    | default                  | executor     |
+| git-push       | If true, Push the changelog to remote repository. Else store changelog to dir /tmp/.persist/persist  |     -    | false                    | boolean      |
+| project        | Name of project on GitHub.                                                                           |     -    | CIRCLE_PROJECT_REPONAME  | env_var_name |
+| token          | To make more than 50 requests per hour your GitHub token is required.                                |     -    | GITHUB_TOKEN             | env_var_name |
+| user           | Username of the owner of target GitHub repo.                                                         |     -    | CIRCLE_PROJECT_USERNAME  | env_var_name |
+
 </details>
 
 ### Job Custom
 <details>
     <summary>Click to expand!</summary>
-    
+
 |          parameter         |                                                           description                                                          | required |                       default                       |     type     |
 |:--------------------------:|:------------------------------------------------------------------------------------------------------------------------------:|:--------:|:---------------------------------------------------:|:------------:|
 | add-sections               | Add new sections but keep the default sections.                                                                                |     -    | ''                                                  | string       |
 | author                     | Add author of pull request at the end. Default is true                                                                         |     -    | true                                                | boolean      |
 | base                       | Optional base file to append generated changes to.                                                                             |     -    | ''                                                  | string       |
 | bot-email                  | Email to commit                                                                                                                |     -    | circleci@bot-noreply.com                            | string       |
-| bot-name                   | User name to commit                                                                                                            |     -    | CircleCI-bot                                        | string       |
+| bot-name                   | User name to commit                                                                                                            |     -    | circleci-bot                                        | string       |
 | branch                     | Branch to push changelog                                                                                                       |     -    | master                                              | string       |
 | breaking-label             | Set up custom label for breaking changes section. Default is "\*\*Implemented enhancements:\*\*".                              |     -    | '\*\*Implemented enhancements:\*\*'                 | string       |
 | breaking-labels            | Issues with these labels will be added to a new section, called Breaking changes. Default is backwards-incompatible,breaking.  |     -    | 'backwards-incompatible,breaking'                   | string       |
@@ -240,9 +240,10 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | filter-by-milestone        | Use milestone to detect when issue was resolved. Default is true.                                                              |     -    | true                                                | boolean      |
 | front-matter               | Add YAML front matter. Formatted as JSON because it's easier to add on the command line.                                       |     -    | ''                                                  | string       |
 | future-release             | Put the unreleased changes in the specified release number.                                                                    |     -    | ''                                                  | string       |
+| git-push                   | If true, Push the changelog to remote repository. Else store changelog to dir /tmp/.persist/persist                            |     -    | false                                               | boolean      |
 | github-api                 | The enterprise endpoint to use for your GitHub API.                                                                            |     -    | ''                                                  | string       |
 | github-site                | The Enterprise GitHub site where your project is hosted.                                                                       |     -    | ''                                                  | string       |
-| header-label               | Set up custom header label. Default is # Changelog.                                                                            |     -    | '# Changelog'                                       | string       |
+| header-label               | Set up custom header label. Default is \# Changelog.                                                                           |     -    | '\# Changelog'                                      | string       |
 | http-cache                 | Use HTTP Cache to cache GitHub API requests (useful for large repos). Default is true.                                         |     -    | true                                                | boolean      |
 | include-labels             | Of the labeled issues, only include the ones with the specified labels.                                                        |     -    | ''                                                  | string       |
 | issue-line-labels          | The specified labels will be shown in brackets next to each matching issue. Use ALL to show all labels. Default is [].         |     -    | ''                                                  | string       |
@@ -256,7 +257,6 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | pr-wo-labels               | Include pull requests without labels in changelog. Default is true.                                                            |     -    | true                                                | boolean      |
 | project                    | Name of project on GitHub.                                                                                                     |     -    | CIRCLE_PROJECT_REPONAME                             | env_var_name |
 | pull-requests              | Include pull-requests in changelog. Default is true.                                                                           |     -    | true                                                | boolean      |
-| git-push                   | If true, Push the changelog to remote repository. Else store changelog to dir tmp/automate                                     |     -    | false                                               | boolean      |
 | release-branch             | Limit pull requests to the release branch, such as master or release.                                                          |     -    | ''                                                  | string       |
 | release-url                | The URL to point to for release links, in printf format (with the tag as variable).                                            |     -    | ''                                                  | string       |
 | removed-label              | Set up custom label for removed section. Default is "\*\*Removed:\*\*".                                                        |     -    | '\*\*Removed:\*\*'                                  | string       |
@@ -266,7 +266,6 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | simple-list                | Create a simple list from issues and pull requests. Default is false.                                                          |     -    | false                                               | boolean      |
 | since-tag                  | Changelog will start after specified tag.                                                                                      |     -    | ''                                                  | string       |
 | ssl-ca-file                | Path to cacert.pem file. Default is a bundled lib/github_changelog_generator/ssl_certs/cacert.pem. Respects SSL_CA_PATH.       |     -    | lib/github_changelog_generator/ssl_certs/cacert.pem | string       |
-| steps                      | Any step before execute job. It can be used to export or retrieve some environment variable.                                   |     -    | []                                                  | steps        |
 | strip-generator-notice     | Strip generator reference.                                                                                                     |     -    | false                                               | boolean      |
 | strip-headers              | Strip headers.                                                                                                                 |     -    | false                                               | boolean      |
 | token                      | To make more than 50 requests per hour your GitHub token is required.                                                          |     -    | GITHUB_TOKEN                                        | env_var_name |
@@ -278,12 +277,13 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | verbose                    | Run verbosely. Default is true.                                                                                                |     -    | true                                                | boolean      |
 
 </details>
-  
+
 ## 🔍 Main features
 
-- [Orb-CircleCI](https://circleci.com/orbs/) 
+- [Orb-CircleCI](https://circleci.com/orbs/)
+- [Orb-Circleci Persist Files](https://github.com/onimur/circleci-persist-files)
 - [github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator)
-  
+
 ## 🧩 Contributing
 
 This project is open-source, so feel free to fork, or to share your ideas and changes to improve the project, check with more details below.
