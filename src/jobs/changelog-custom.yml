@@ -323,7 +323,7 @@ steps:
   - when:
       condition: <<parameters.git-push>>
       steps:
-        - git-checkout:
+        - tools/git-checkout:
             branch: <<parameters.branch>>
   - changelog:
       user: <<parameters.user>>
@@ -386,18 +386,17 @@ steps:
   - when:
       condition: <<parameters.git-push>>
       steps:
-        - git-push:
+        - tools/git-push:
             user: <<parameters.user>>
             project: <<parameters.project>>
             bot-name: <<parameters.bot-name>>
             bot-email: <<parameters.bot-email>>
             commit-message: <<parameters.commit-message>>
             token: <<parameters.token>>
-            output: <<parameters.output>>
+            paths: <<parameters.output>>
             branch: <<parameters.branch>>
   - unless:
       condition: <<parameters.git-push>>
       steps:
-        - persist/persist-to-dir:
+        - tools/persist-dir:
             paths: <<parameters.output>>
-            store-artifacts: true

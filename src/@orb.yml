@@ -2,11 +2,13 @@ version: 2.1
 
 description: >
   Orb for CircleCI that automatically generates the change log from your tags, issues, labels and pull requests on GitHub, using github-changelog-generator's and based action-github-changelog-generator's.
+
   Check the repository above for more details. Feel free to send any questions, suggestions or contributions to this orb.
+
   Fully automated changelog generation with github-changelog-generator https://github.com/github-changelog-generator/github-changelog-generator
 display:
   home_url: "https://github.com/onimur/circleci-github-changelog-generator"
   source_url: "https://github.com/onimur/circleci-github-changelog-generator"
 
 orbs:
-  persist: onimur/persist-files@0.0.4
+  tools: onimur/common-tools@0.0.1

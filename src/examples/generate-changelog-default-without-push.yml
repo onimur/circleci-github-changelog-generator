@@ -7,8 +7,8 @@ usage:
     github-changelog-generator: onimur/github-changelog-generator@x.y.z
 
     # This orb is optional to facilitate the recovery of the file that had been sent by "persist to workspace".
-    # You can check it out here: https://github.com/onimur/circleci-persist-files
-    persist: onimur/persist@x.y.z
+    # You can check it out here: https://github.com/onimur/circleci-common-tools
+    tools: onimur/common-tools@x.y.z
 
   orb_tagged_filters: &orb_tagged_filters
     branches:
@@ -20,7 +20,7 @@ usage:
     print-changelog:
       machine: true
       steps:
-        - persist/attach-at-dir
+        - tools/attach-dir
         - run:
             name: Print changelog
             command: |
@@ -41,7 +41,7 @@ usage:
               - checkout
             context: your-context           # Case contain your Github Token
             token: GITHUB_TOKEN             # Token as env_var
-            push-git: false                 # Push changelog to remote repository
+            push-git: false                 # The changelog will be save on /tmp/.persist/persist/
             filters: *orb_tagged_filters    # Trigger to only tag
         - print-changelog:
             filters: *orb_tagged_filters

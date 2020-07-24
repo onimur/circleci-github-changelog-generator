@@ -52,7 +52,7 @@ steps:
   - when:
       condition: <<parameters.git-push>>
       steps:
-        - git-checkout:
+        - tools/git-checkout:
             branch: <<parameters.branch>>
   - changelog:
       user: <<parameters.user>>
@@ -61,7 +61,7 @@ steps:
   - when:
       condition: <<parameters.git-push>>
       steps:
-        - git-push:
+        - tools/git-push:
             user: <<parameters.user>>
             project: <<parameters.project>>
             bot-name: <<parameters.bot-name>>
@@ -72,6 +72,5 @@ steps:
   - unless:
       condition: <<parameters.git-push>>
       steps:
-        - persist/persist-to-dir:
+        - tools/persist-dir:
             paths: CHANGELOG.md
-            store-artifacts: true
