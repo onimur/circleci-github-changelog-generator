@@ -62,6 +62,7 @@ steps:
       condition: <<parameters.git-push>>
       steps:
         - tools/git-push:
+            paths: CHANGELOG.md
             user: <<parameters.user>>
             project: <<parameters.project>>
             bot-name: <<parameters.bot-name>>
