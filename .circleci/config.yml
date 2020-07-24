@@ -73,11 +73,11 @@ jobs:
           name: Create artifacts folder
           command: |
             find -iname 'github-changelog-logger.log' -exec cp {} ./artifacts/ \;
-      - github-changelog-generator/git-push:
+      - tools/git-push:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
           token: GITHUB_TOKEN
-          output: ${OUTPUT_FILE}
+          paths: ${OUTPUT_FILE}
       - store_artifacts:
           path: /artifacts
 
