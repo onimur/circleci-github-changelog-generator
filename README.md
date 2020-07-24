@@ -110,7 +110,7 @@ workflows:
             - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
-          git-push: false                 # The changelog will be stored in artifacts and can be retrieved using: - attach_workspace: at: tmp //https://circleci.com/docs/2.0/configuration-reference/#example-7
+          git-push: false                 # The changelog will be stored in /tmp/.persist/persist/ and can be retrieved using: - attach_workspace: at: tmp //https://circleci.com/docs/2.0/configuration-reference/#example-7
           filters: *orb_tagged_filters    # Trigger to only tag
 ```
 
@@ -174,7 +174,7 @@ workflows:
             - checkout
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
-          git-push: false                 # The changelog will be stored in artifacts and can be retrieved using: - attach_workspace: at: tmp //https://circleci.com/docs/2.0/configuration-reference/#example-7
+          git-push: false                 # The changelog will be stored in /tmp/.persist/persist/ and can be retrieved using: - attach_workspace: at: tmp //https://circleci.com/docs/2.0/configuration-reference//#example-7
           header-label: "# My Changelog"
           date-format: "%d-%m-%Y"
           output: CUSTOM-CHANGELOG.md
@@ -281,7 +281,7 @@ You can check the list of all commands [here](https://github.com/github-changelo
 ## 🔍 Main features
 
 - [Orb-CircleCI](https://circleci.com/orbs/)
-- [Orb-Circleci Persist Files](https://github.com/onimur/circleci-persist-files)
+- [Orb-Circleci Common Tools](https://github.com/onimur/circleci-common-tools)
 - [github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator)
 
 ## 🧩 Contributing
