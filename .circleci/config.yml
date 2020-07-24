@@ -50,7 +50,7 @@ jobs:
       - export-env-var
       - checkout
       # Test your orb e.g.
-      - github-changelog-generator/git-checkout
+      - tools/git-checkout
       - mem/recall:
           env_var: DATE_FORMAT
       - run:
