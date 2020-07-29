@@ -283,7 +283,7 @@ You can check the list of all commands [here](https://github.com/github-changelo
 
 Here's a [wikipage list of projects](https://github.com/onimur/circleci-github-changelog-generator/wiki/Projects-using-Circleci-Github-Changelog-Generator).
 
-If you've used this library, please let me know! Nothing makes me happier than seeing someone else take my work and go wild with it.
+If you've used this orb, please let me know! Nothing makes me happier than seeing someone else take my work and go wild with it.
 
 ## 🔍 Main features
 
