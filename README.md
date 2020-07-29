@@ -46,12 +46,13 @@ If you like this project and would like to help us, make a donation:
     - [Simple Example](#simple-example)
         - [Push to remote repository](#push-to-remote-repository)
         - [Without push](#without-push)
-    - [Custom Example]()
+    - [Custom Example](#custom-example)
         - [Push to remote repository](#push-to-remote-repository-1)
         - [Without push](#without-push-1)
 - [Commands](#%EF%B8%8F-commands)
     - [Job Default](#job-default)
     - [Job Custom](#job-default)
+- [Projects using this library](#-projects-using-this-library)
 - [Main features](#-main-features)
 - [Contributing](#-contributing)
 - [License](#-license)
@@ -277,6 +278,12 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | verbose                    | Run verbosely. Default is true.                                                                                                |     -    | true                                                | boolean      |
 
 </details>
+
+## 🚀 Projects using this library
+
+Here's a [wikipage list of projects](https://github.com/onimur/circleci-github-changelog-generator/wiki/Projects-using-Circleci-Github-Changelog-Generator).
+
+If you've used this library, please let me know! Nothing makes me happier than seeing someone else take my work and go wild with it.
 
 ## 🔍 Main features
 
