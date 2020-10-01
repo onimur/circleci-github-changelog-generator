@@ -1,5 +1,17 @@
 # Changelog
 
+## [**Unreleased**](https://github.com/onimur/circleci-github-changelog-generator/tree/HEAD)
+
+[Full Changelog](https://github.com/onimur/circleci-github-changelog-generator/compare/patch-release-v2.1.8...HEAD)
+
+**Merged pull requests:**
+
+- Update command push-force [\#2](https://github.com/onimur/circleci-github-changelog-generator/pull/2) ([onimur](https://github.com/onimur))
+
+## [patch-release-v2.1.8](https://github.com/onimur/circleci-github-changelog-generator/tree/patch-release-v2.1.8) (01-10-20)
+
+[Full Changelog](https://github.com/onimur/circleci-github-changelog-generator/compare/patch-release-v2.1.7...patch-release-v2.1.8)
+
 ## [patch-release-v2.1.7](https://github.com/onimur/circleci-github-changelog-generator/tree/patch-release-v2.1.7) (24-07-20)
 
 [Full Changelog](https://github.com/onimur/circleci-github-changelog-generator/compare/patch-release-v2.1.6...patch-release-v2.1.7)
