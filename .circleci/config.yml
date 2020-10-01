@@ -4,7 +4,7 @@ orbs:
   orb-tools: circleci/orb-tools@9.2.1
   queue: eddiewebb/queue@1.5.0
   changelog: onimur/github-changelog-generator@2.1.7
-  tools: onimur/common-tools@0.0.1
+  tools: onimur/common-tools@0.0.3
   mem: circleci/rememborb@0.0.1
   # add your orb below, to be used in integration tests (note: a
   # @dev:alpha release must exist; if none exists, you'll need to
@@ -76,6 +76,7 @@ jobs:
       - tools/git-push:
           user: CIRCLE_PROJECT_USERNAME
           project: CIRCLE_PROJECT_REPONAME
+          push-force: true
           token: GITHUB_TOKEN
           paths: ${OUTPUT_FILE}
       - store_artifacts:

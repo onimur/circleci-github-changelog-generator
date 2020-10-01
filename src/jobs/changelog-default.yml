@@ -28,6 +28,11 @@ parameters:
       If true, Push the changelog to remote repository. Else store changelog to dir /tmp/.persist/persist
     type: boolean
   #Parameters only to push changelog
+  push-force:
+    default: false
+    description: |
+      Force the push
+    type: boolean
   bot-name:
     default: circleci-bot
     description: |
@@ -70,6 +75,7 @@ steps:
             commit-message: <<parameters.commit-message>>
             token: <<parameters.token>>
             branch: <<parameters.branch>>
+            push-force: <<parameters.push-force>>
   - unless:
       condition: <<parameters.git-push>>
       steps:

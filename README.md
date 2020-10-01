@@ -201,6 +201,7 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | commit-message | Commit message                                                                                       |     -    | Auto Update changelog    | string       |
 | executor       | Executor to use for this job. Defaults to this orb's default executor.                               |     -    | default                  | executor     |
 | git-push       | If true, Push the changelog to remote repository. Else store changelog to dir /tmp/.persist/persist  |     -    | false                    | boolean      |
+| push-force     | If true, Force the push.                                                                             |     -    | false                    | boolean      |
 | project        | Name of project on GitHub.                                                                           |     -    | CIRCLE_PROJECT_REPONAME  | env_var_name |
 | token          | To make more than 50 requests per hour your GitHub token is required.                                |     -    | GITHUB_TOKEN             | env_var_name |
 | user           | Username of the owner of target GitHub repo.                                                         |     -    | CIRCLE_PROJECT_USERNAME  | env_var_name |
@@ -242,6 +243,7 @@ You can check the list of all commands [here](https://github.com/github-changelo
 | front-matter               | Add YAML front matter. Formatted as JSON because it's easier to add on the command line.                                       |     -    | ''                                                  | string       |
 | future-release             | Put the unreleased changes in the specified release number.                                                                    |     -    | ''                                                  | string       |
 | git-push                   | If true, Push the changelog to remote repository. Else store changelog to dir /tmp/.persist/persist                            |     -    | false                                               | boolean      |
+| push-force                 | If true, Force the push.                                                                                                       |     -    |                    false                                               | boolean      |
 | github-api                 | The enterprise endpoint to use for your GitHub API.                                                                            |     -    | ''                                                  | string       |
 | github-site                | The Enterprise GitHub site where your project is hosted.                                                                       |     -    | ''                                                  | string       |
 | header-label               | Set up custom header label. Default is \# Changelog.                                                                           |     -    | '\# Changelog'                                      | string       |
