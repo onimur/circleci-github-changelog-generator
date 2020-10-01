@@ -46,6 +46,15 @@ usage:
             output: CUSTOM-CHANGELOG.md
             breaking-label: "**Breaking**"
             bugs-label: "**Bugs**"
+            #Push the changelog to remote repository manually
+            post-steps:
+              - run:
+                  command: |
+                    git config user.name "BotUsername"
+                    git config user.email "bot@email.com"
+                    git add CHANGELOG.md
+                    git commit -m "Your description [skip ci]"
+                    git push -q https://$<<parameters.token>>@github.com/YourUser/YourProjectName.git master
             filters: *orb_tagged_filters    # Trigger to only tag
         - print-changelog:
             filters: *orb_tagged_filters

@@ -86,7 +86,6 @@ workflows:
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
           git-push: true                  # Push changelog to remote repository
-          push-force: true                # Force the push to remote repository
           filters: *orb_tagged_filters    # Trigger to only tag
 ```
 
@@ -113,6 +112,15 @@ workflows:
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
           git-push: false                 # The changelog will be stored in /tmp/.persist/persist/ and can be retrieved using: - attach_workspace: at: tmp //https://circleci.com/docs/2.0/configuration-reference/#example-7
+          #Push the changelog to remote repository manually
+          post-steps:
+            - run:
+                command: |
+                  git config user.name "BotUsername"
+                  git config user.email "bot@email.com"
+                  git add CHANGELOG.md
+                  git commit -m "Your description [skip ci]"
+                  git push -q https://$<<parameters.token>>@github.com/YourUser/YourProjectName.git master
           filters: *orb_tagged_filters    # Trigger to only tag
 ```
 
@@ -143,7 +151,6 @@ workflows:
           context: your-context               # Case contain your Github Token
           token: GITHUB_TOKEN                 # Token as env_var
           git-push: true                      # Push changelog to remote repository
-          push-force: true                # Force the push to remote repository
           commit-message: Update changelog    # Custom commit message
           bot-name: my-bot                    # Custom bot name
           bot-email: my-bot@email.com         # Custom bot email
@@ -183,6 +190,15 @@ workflows:
           output: CUSTOM-CHANGELOG.md
           breaking-label: "**Breaking**"
           bugs-label: "**Bugs**"
+          #Push the changelog to remote repository manually
+          post-steps:
+            - run:
+                command: |
+                  git config user.name "BotUsername"
+                  git config user.email "bot@email.com"
+                  git add CHANGELOG.md
+                  git commit -m "Your description [skip ci]"
+                  git push -q https://$<<parameters.token>>@github.com/YourUser/YourProjectName.git master
           filters: *orb_tagged_filters    # Trigger to only tag
 ```
 
