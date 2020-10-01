@@ -400,7 +400,7 @@ steps:
             token: <<parameters.token>>
             paths: <<parameters.output>>
             branch: <<parameters.branch>>
-            #push-force: <<parameters.push-force>>
+            push-force: <<parameters.push-force>>
   - unless:
       condition: <<parameters.git-push>>
       steps:
