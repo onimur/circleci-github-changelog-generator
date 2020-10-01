@@ -1,8 +1,8 @@
 # Changelog
 
-## [**Unreleased**](https://github.com/onimur/circleci-github-changelog-generator/tree/HEAD)
+## [patch-release-v2.1.9](https://github.com/onimur/circleci-github-changelog-generator/tree/patch-release-v2.1.9) (01-10-20)
 
-[Full Changelog](https://github.com/onimur/circleci-github-changelog-generator/compare/patch-release-v2.1.8...HEAD)
+[Full Changelog](https://github.com/onimur/circleci-github-changelog-generator/compare/patch-release-v2.1.8...patch-release-v2.1.9)
 
 **Merged pull requests:**
 
