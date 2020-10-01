@@ -86,6 +86,7 @@ workflows:
           context: your-context           # Case contain your Github Token
           token: GITHUB_TOKEN             # Token as env_var
           git-push: true                  # Push changelog to remote repository
+          push-force: true                # Force the push to remote repository
           filters: *orb_tagged_filters    # Trigger to only tag
 ```
 
@@ -142,6 +143,7 @@ workflows:
           context: your-context               # Case contain your Github Token
           token: GITHUB_TOKEN                 # Token as env_var
           git-push: true                      # Push changelog to remote repository
+          push-force: true                # Force the push to remote repository
           commit-message: Update changelog    # Custom commit message
           bot-name: my-bot                    # Custom bot name
           bot-email: my-bot@email.com         # Custom bot email
