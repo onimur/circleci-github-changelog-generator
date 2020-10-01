@@ -41,7 +41,7 @@ usage:
               - checkout
             context: your-context           # Case contain your Github Token
             token: GITHUB_TOKEN             # Token as env_var
-            push-git: false                 # The changelog will be save on /tmp/.persist/persist/
+            git-push: false                 # The changelog will be save on /tmp/.persist/persist/
             #Push the changelog to remote repository manually
             post-steps:
               - run:

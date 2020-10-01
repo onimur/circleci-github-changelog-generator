@@ -20,7 +20,7 @@ usage:
               - checkout
             context: your-context           # Case contain your Github Token
             token: GITHUB_TOKEN             # Token as env_var
-            push-git: true                  # Push changelog to remote repository
+            git-push: true                  # Push changelog to remote repository
             push-force: true                # Force the push to remote repository
             commit-message: Update changelog
             bot-name: my-bot

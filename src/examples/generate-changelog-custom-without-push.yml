@@ -40,7 +40,7 @@ usage:
               - checkout
             context: your-context           # Case contain your Github Token
             token: GITHUB_TOKEN             # Token as env_var
-            push-git: false                 # The changelog will be save on /tmp/.persist/persist/
+            git-push: false                 # The changelog will be save on /tmp/.persist/persist/
             header-label: "# My Changelog"
             date-format: "%d-%m-%Y"
             output: CUSTOM-CHANGELOG.md
