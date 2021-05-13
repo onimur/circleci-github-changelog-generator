@@ -3,7 +3,7 @@
 
 <p align="center">
     <a href="https://circleci.com/orbs/registry/orb/onimur/github-changelog-generator" title="Orb Version">
-        <img src="https://img.shields.io/endpoint.svg?url=https://badges.circleci.io/orb/onimur/github-changelog-generator">
+        <img src="https://badges.circleci.com/orbs/onimur/github-changelog-generator.svg">
     </a>
     <a href="./LICENSE" title="License">
         <img src="https://img.shields.io/github/license/onimur/circleci-github-changelog-generator">
